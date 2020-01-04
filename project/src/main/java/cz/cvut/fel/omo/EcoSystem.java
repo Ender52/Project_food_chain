@@ -7,11 +7,27 @@ import java.util.List;
 
 public class EcoSystem {
     private BlockChain blockChain;
+    private int day = 0;
     private List<Party> parties = new ArrayList<>();
 
-    public EcoSystem(BlockChain bc, List<Party> parties) {
+    public EcoSystem(BlockChain bc) {
         blockChain = bc;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public List<Party> getParties() {
+        return parties;
+    }
+
+    public void setParties(List<Party> parties) {
         this.parties = parties;
+    }
+
+    public BlockChain getBlockChain() {
+        return blockChain;
     }
 
     public void start(int steps) {
@@ -20,6 +36,7 @@ public class EcoSystem {
                 p.checkRequestsToMe();
                 p.work();
             }
+            day++;
         }
     }
 }

@@ -1,6 +1,6 @@
 package cz.cvut.fel.omo.parties.bakery;
 
-import cz.cvut.fel.omo.BlockChain;
+import cz.cvut.fel.omo.EcoSystem;
 import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
 import cz.cvut.fel.omo.parties.Party;
 import cz.cvut.fel.omo.production.product.ProductType;
@@ -13,8 +13,8 @@ public class Bakery extends Party {
     BakeryChannel bakeryChannel;
     OrangesChannel orangesChannel;
 
-    public Bakery(String name, BlockChain blockChain) {
-        super(name, blockChain);
+    public Bakery(String name, EcoSystem ecoSystem) {
+        super(name, ecoSystem);
         myProduction = new BakeryProduction(this);
         bakeryChannel = blockChain.bakeryChannel;
         bakeryChannel.attend(this);

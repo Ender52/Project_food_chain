@@ -1,6 +1,6 @@
 package cz.cvut.fel.omo.parties.shop;
 
-import cz.cvut.fel.omo.BlockChain;
+import cz.cvut.fel.omo.EcoSystem;
 import cz.cvut.fel.omo.parties.Party;
 import cz.cvut.fel.omo.production.product.ProductType;
 import cz.cvut.fel.omo.transactions.BakeryChannel;
@@ -13,8 +13,8 @@ public class Shop extends Party {
     BakeryChannel bakeryChannel;
     OrangesChannel orangesChannel;
 
-    public Shop(String name, BlockChain bc) {
-        super(name, bc);
+    public Shop(String name, EcoSystem ecoSystem) {
+        super(name, ecoSystem);
         milkChannel = blockChain.milkProductionChannel;
         milkChannel.attend(this);
         bakeryChannel = blockChain.bakeryChannel;

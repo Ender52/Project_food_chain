@@ -1,8 +1,13 @@
 package cz.cvut.fel.omo.parties;
 
 import cz.cvut.fel.omo.BlockChain;
+import cz.cvut.fel.omo.EcoSystem;
 import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
+import cz.cvut.fel.omo.production.Creation;
 import cz.cvut.fel.omo.production.Production;
+import cz.cvut.fel.omo.production.PutIntoStorage;
+import cz.cvut.fel.omo.production.TakenFromStorage;
+import cz.cvut.fel.omo.production.product.Operation;
 import cz.cvut.fel.omo.production.product.Product;
 import cz.cvut.fel.omo.production.product.ProductType;
 import cz.cvut.fel.omo.transactions.Money;
@@ -14,12 +19,21 @@ public abstract class Party {
     protected Production myProduction;
     public BlockChain blockChain;
     public Money wallet;
+    private EcoSystem ecoSystem;
 
-
-    public Party(String name, BlockChain bc) {
+    public Party(String name, EcoSystem ecoSystem) {
         System.out.println("Party " + name + " created");
         this.name = name;
-        this.blockChain = bc;
+        this.ecoSystem = ecoSystem;
+        this.blockChain = ecoSystem.getBlockChain();
+    }
+
+    public EcoSystem getEcoSystem() {
+        return ecoSystem;
+    }
+
+    public Production getMyProduction() {
+        return myProduction;
     }
 
 
@@ -40,11 +54,11 @@ public abstract class Party {
 
     }
 
-
     public void responseToRequest(Request request) {
         System.out.println("Party " + name + " is responding on request from Party " + request.sender.name);
         Product[] products = myProduction.getMyStorage().getProducts(request.productType, request.amount);
-        Transaction transaction = new Transaction(this, request.sender, products);
+        createOperation("Take", products);
+        Transaction transaction = new Transaction(this, request.sender, products, ecoSystem.getDay());
         request.channel.doTransaction(transaction);
         request.channel.allRequests.remove(request);
     }
@@ -52,6 +66,7 @@ public abstract class Party {
     public void receiveProducts(Product[] products) {
         {
             try {
+                createOperation("Put", products);
                 myProduction.getMyStorage().put(products);
                 System.out.println("Party " + name + " received " + products.length + " " + products[0].type);
             } catch (WrongProductTypeException e) {
@@ -64,4 +79,20 @@ public abstract class Party {
         System.out.println("Party " + name + " balance chenge " + amount);
         wallet.add(amount);
     }
+
+    public void createOperation(String type, Product[] products) {
+        Operation operation;
+        if (type.equals("Creation")) {
+            operation = new Creation(this, products, ecoSystem.getDay());
+        } else if (type.equals("Put")) {
+            operation = new PutIntoStorage(this, products, ecoSystem.getDay());
+        } else if (type.equals("Take")) {
+            operation = new TakenFromStorage(this, products, ecoSystem.getDay());
+        } else {
+            operation = null;
+            System.err.println("Wrong Operation type");
+        }
+        blockChain.addBlock(operation);
+    }
+
 }

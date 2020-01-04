@@ -13,14 +13,17 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws NoSuchAlgorithmException {
-        BlockChain blockChain = new BlockChain();
-        MilkFarmer milkFarmer1 = new MilkFarmer("Petya", blockChain);
-        MilkFarmer milkFarmer2 = new MilkFarmer("Vasya", blockChain);
-        WheatFarmer wheatFarmer = new WheatFarmer("Sam", blockChain);
-        OrangeFarmer orangeFarmer = new OrangeFarmer("Apelsin", blockChain);
-        Bakery bakery = new Bakery("Chlebozavod3", blockChain);
 
-        Shop shop = new Shop("albert", blockChain);
+        BlockChain blockChain = new BlockChain();
+        EcoSystem ecoSystem = new EcoSystem(blockChain);
+
+        MilkFarmer milkFarmer1 = new MilkFarmer("Petya", ecoSystem);
+        MilkFarmer milkFarmer2 = new MilkFarmer("Vasya", ecoSystem);
+        WheatFarmer wheatFarmer = new WheatFarmer("Sam", ecoSystem);
+        OrangeFarmer orangeFarmer = new OrangeFarmer("Apelsin", ecoSystem);
+        Bakery bakery = new Bakery("Chlebozavod3", ecoSystem);
+
+        Shop shop = new Shop("albert", ecoSystem);
         List<Party> parties = new ArrayList<>();
         parties.add(milkFarmer1);
         parties.add(milkFarmer2);
@@ -28,9 +31,23 @@ public class Main {
         parties.add(orangeFarmer);
         parties.add(bakery);
         parties.add(shop);
-
-        EcoSystem ecoSystem = new EcoSystem(blockChain, parties);
+        ecoSystem.setParties(parties);
         ecoSystem.start(50);
+        System.out.println("END");
+        blockChain.chain.get(287).operation.products[0].report();
+//        int [][] ints = new int [3][10];
+//        int [] a = new int[]{1,2,3,4,5,6,7,8,9,10};
+//        int [] b = new int[]{10,20,30,40,50,60,70,80,90,100};
+//        int [] c = new int[]{0,2,3,4,5,6,7,8,9,10};
+//        ints[0] = a;
+//        ints[1]=b;
+//        ints[2] = c;
+//        for (int i = 0 ; i <3; i++){
+//            for (int k = 0 ; k <10; k++){
+//                System.out.print(ints[i][k]+" ");
+//            }
+//            System.out.println("");
+//        }
     }
 
 }

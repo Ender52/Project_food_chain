@@ -1,6 +1,6 @@
 package cz.cvut.fel.omo.parties.wheat;
 
-import cz.cvut.fel.omo.BlockChain;
+import cz.cvut.fel.omo.EcoSystem;
 import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
 import cz.cvut.fel.omo.parties.Party;
 import cz.cvut.fel.omo.production.product.ProductType;
@@ -11,8 +11,8 @@ import cz.cvut.fel.omo.transactions.Request;
 public class WheatFarmer extends Party {
     BakeryChannel bakeryChannel;
 
-    public WheatFarmer(String name, BlockChain blockChain) {
-        super(name, blockChain);
+    public WheatFarmer(String name, EcoSystem e) {
+        super(name, e);
         myProduction = new WheatProduction(this);
         bakeryChannel = blockChain.bakeryChannel;
         bakeryChannel.attend(this);
