@@ -1,20 +1,37 @@
 package cz.cvut.fel.omo.production.product;
 
-import cz.cvut.fel.omo.parties.Party;
+import cz.cvut.fel.omo.Block;
+import cz.cvut.fel.omo.parties.PartyImpl;
 
-public abstract class Operation {
-    public Party party;
-    public Product[] products;
-    public int day;
+public abstract class Operation implements Block {
+    public final PartyImpl party;
+    public final Product product;
+    public final int day;
+    private final String prevBlockHash;
 
-    public Operation(Party party, Product[] products, int day) {
+    public Operation(PartyImpl party, Product product, int day, final String prevBlockHash) {
         this.party = party;
-        this.products = products;
+        this.product = product;
         this.day = day;
-        for (Product p : products) p.addOperation(this);
+        this.prevBlockHash = prevBlockHash;
     }
 
     @Override
     public abstract String toString();
+
+    @Override
+    public String getMyHash() {
+        int sum = 0;
+        for (char ch : toString().toCharArray()) {
+            sum += ch;
+        }
+        return "" + sum + product.getId();
+    }
+
+    @Override
+    public String getPrevBlockHash() {
+        return prevBlockHash;
+    }
+
 
 }
