@@ -13,8 +13,8 @@ public class Bakery extends Party {
     BakeryChannel bakeryChannel;
     OrangesChannel orangesChannel;
 
-    public Bakery(String name, EcoSystem ecoSystem) {
-        super(name, ecoSystem);
+    public Bakery(String name, EcoSystem ecoSystem, int id) {
+        super(name, ecoSystem, id);
         myProduction = new BakeryProduction(this);
         bakeryChannel = blockChain.bakeryChannel;
         bakeryChannel.attend(this);
@@ -38,7 +38,8 @@ public class Bakery extends Party {
             if (r.productType == ProductType.BREAD || r.productType == ProductType.BUN_WITH_ORANGE_JAM) {
                 try {
                     if (myProduction.getMyStorage().has(r.productType, r.amount)) {
-                        responseToRequest(r);
+//                        responseToRequest(r);
+                        violateDoubleSpend(r);
                         wasAction = true;
                         break;
                     } else {
@@ -51,5 +52,18 @@ public class Bakery extends Party {
             }
         }
         if (!wasAction) startProduceProducts(ProductType.BREAD, 50);
+    }
+
+    @Override
+    public void work() {
+        super.work();
+        boolean has = false;
+        try {
+            has = myProduction.myStorage.has(ProductType.WHEAT, 1);
+        } catch (WrongProductTypeException e) {
+            e.printStackTrace();
+        }
+//        if(ecoSystem.getDay() == 10&& has ) violateChangeDateOfProduction(myProduction.myStorage.get(ProductType.WHEAT));
+
     }
 }

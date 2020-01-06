@@ -35,20 +35,20 @@ public class BakeryProductionStorage implements Storage {
     @Override
     public Product get(ProductType type) {
         if (type == ProductType.BREAD) {
-            return bread.remove(0);
+            return bread.get(0);
         } else if (type == ProductType.BUN_WITH_ORANGE_JAM) {
-            return bunWithJam.remove(0);
+            return bunWithJam.get(0);
         } else if (type == ProductType.WHEAT) {
-            return wheat.remove(0);
+            return wheat.get(0);
         } else if (type == ProductType.ORANGE) {
-            return oranges.remove(0);
+            return oranges.get(0);
         } else {
             return null;
         }
     }
 
     @Override
-    public Product[] getProducts(ProductType type, int amount) {
+    public Product[] takeProducts(ProductType type, int amount) {
         if (type == ProductType.BREAD) {
             Product[] res = new Product[amount];
             for (int i = 0; i < amount; i++) {

@@ -13,8 +13,8 @@ public class Shop extends Party {
     BakeryChannel bakeryChannel;
     OrangesChannel orangesChannel;
 
-    public Shop(String name, EcoSystem ecoSystem) {
-        super(name, ecoSystem);
+    public Shop(String name, EcoSystem ecoSystem, int id) {
+        super(name, ecoSystem, id);
         milkChannel = blockChain.milkProductionChannel;
         milkChannel.attend(this);
         bakeryChannel = blockChain.bakeryChannel;

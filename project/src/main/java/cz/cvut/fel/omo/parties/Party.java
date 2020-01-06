@@ -19,23 +19,20 @@ public abstract class Party {
     protected Production myProduction;
     public BlockChain blockChain;
     public Money wallet;
-    private EcoSystem ecoSystem;
+    protected EcoSystem ecoSystem;
+    private int id;
 
-    public Party(String name, EcoSystem ecoSystem) {
+    public Party(String name, EcoSystem ecoSystem, int id) {
         System.out.println("Party " + name + " created");
         this.name = name;
         this.ecoSystem = ecoSystem;
         this.blockChain = ecoSystem.getBlockChain();
+        this.id = id;
     }
 
-    public EcoSystem getEcoSystem() {
-        return ecoSystem;
+    public int getId() {
+        return id;
     }
-
-    public Production getMyProduction() {
-        return myProduction;
-    }
-
 
     public abstract void createRequest(ProductType type, int amount);
 
@@ -56,7 +53,7 @@ public abstract class Party {
 
     public void responseToRequest(Request request) {
         System.out.println("Party " + name + " is responding on request from Party " + request.sender.name);
-        Product[] products = myProduction.getMyStorage().getProducts(request.productType, request.amount);
+        Product[] products = myProduction.getMyStorage().takeProducts(request.productType, request.amount);
         createOperation("Take", products);
         Transaction transaction = new Transaction(this, request.sender, products, ecoSystem.getDay());
         request.channel.doTransaction(transaction);
@@ -95,4 +92,18 @@ public abstract class Party {
         blockChain.addBlock(operation);
     }
 
+    protected void violateChangeDateOfProduction(Product product) {
+        product.getMyOperations().get(0).day = product.getMyOperations().get(0).day + 5;
+    }
+
+    protected void violateDoubleSpend(Request request) {
+        System.out.println("Party " + name + " is responding on request from Party " + request.sender.name);
+        Product[] products = myProduction.getMyStorage().takeProducts(request.productType, request.amount);
+        createOperation("Take", products);
+        Product fake = products[0];
+        products[1] = fake;
+        Transaction transaction = new Transaction(this, request.sender, products, ecoSystem.getDay());
+        request.channel.doTransaction(transaction);
+        request.channel.allRequests.remove(request);
+    }
 }

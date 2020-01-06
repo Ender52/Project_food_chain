@@ -13,8 +13,8 @@ public class MilkFarmer extends Party {
     MilkProductionChannel milkChannel;
     MeatProductionChannel meatChannel;
 
-    public MilkFarmer(String name, EcoSystem ecoSystem) {
-        super(name, ecoSystem);
+    public MilkFarmer(String name, EcoSystem ecoSystem, int id) {
+        super(name, ecoSystem, id);
         myProduction = new MilkProduction(this);
         milkChannel = blockChain.milkProductionChannel;
         milkChannel.attend(this);

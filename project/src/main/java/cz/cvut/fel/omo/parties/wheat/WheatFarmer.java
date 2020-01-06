@@ -11,8 +11,8 @@ import cz.cvut.fel.omo.transactions.Request;
 public class WheatFarmer extends Party {
     BakeryChannel bakeryChannel;
 
-    public WheatFarmer(String name, EcoSystem e) {
-        super(name, e);
+    public WheatFarmer(String name, EcoSystem e, int id) {
+        super(name, e, id);
         myProduction = new WheatProduction(this);
         bakeryChannel = blockChain.bakeryChannel;
         bakeryChannel.attend(this);

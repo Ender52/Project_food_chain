@@ -13,8 +13,8 @@ public class OrangeFarmer extends Party {
     OrangesChannel orangesChannel;
     BakeryChannel bakeryChannel;
 
-    public OrangeFarmer(String name, EcoSystem ecoSystem) {
-        super(name, ecoSystem);
+    public OrangeFarmer(String name, EcoSystem ecoSystem, int id) {
+        super(name, ecoSystem, id);
         myProduction = new OrangeProduction(this);
         orangesChannel = blockChain.orangesChannel;
         orangesChannel.attend(this);

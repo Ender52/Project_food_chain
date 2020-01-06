@@ -30,7 +30,7 @@ public class OrangeProductionStorage implements Storage {
     }
 
     @Override
-    public Product[] getProducts(ProductType type, int amount) {
+    public Product[] takeProducts(ProductType type, int amount) {
         if (type == ProductType.ORANGE) {
             Product[] res = new Product[amount];
             for (int i = 0; i < amount; i++) {
