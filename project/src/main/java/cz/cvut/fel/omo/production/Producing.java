@@ -12,21 +12,21 @@ public class Producing extends State {
         super(context);
         amount = context.getAmount();
         components = context.getComponents();
-        period = 1 + amount / 100;
+        period = 1 + amount / 10;
     }
 
     @Override
     protected void process() {
-        if (amount >= 100) {
-            Product[] newProducts = new Product[100];
-            Product[][] allComps = new Product[components.length][100];
+        if (amount >= 10) {
+            Product[] newProducts = new Product[10];
+            Product[][] allComps = new Product[components.length][10];
             int k = 0;
             for (ProductType type : components) {
-                allComps[k] = context.getProduction().getMyStorage().takeProducts(type, 100);
-                context.getProduction().owner.createOperation("Take", allComps[k]);
+                allComps[k] = context.getProduction().getMyStorage().takeProducts(type, 10);
+                for (Product p : allComps[k]) context.getProduction().owner.createOperation("Take", p);
                 k++;
             }
-            for (int i = 0; i < 100; ++i) {
+            for (int i = 0; i < 10; ++i) {
                 if (components.length == 0) {
                     newProducts[i] = new Product(context.getMyType(), new Product[0], context.getProduction().getIdForNewProduct(context.getMyType()));
                 } else {
@@ -44,7 +44,7 @@ public class Producing extends State {
                 context.getResult()[produced++] = p;
             }
 
-            amount -= 100;
+            amount -= 10;
 
         } else {
             Product[] newProducts = new Product[amount];
@@ -52,7 +52,8 @@ public class Producing extends State {
             int k = 0;
             for (ProductType type : components) {
                 allComps[k] = context.getProduction().getMyStorage().takeProducts(type, amount);
-                context.getProduction().owner.createOperation("Take", allComps[k]);
+                for (Product p : allComps[k]) context.getProduction().owner.createOperation("Take", p);
+
                 k++;
             }
             for (int i = 0; i < amount; ++i) {

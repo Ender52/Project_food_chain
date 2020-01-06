@@ -10,7 +10,7 @@ public class Constants {
     static final int ORANGE = 5000000;
     static final int BUN_WITH_ORANGE_JAM = 6000000;
     static final int SAUSAGE = 7000000;
-
+    public static final String TYPES = "MOWB";
     public static int getProductTypeNumber(ProductType type) {
         if (type == ProductType.WHEAT) {
             return WHEAT;

@@ -1,33 +1,30 @@
 package cz.cvut.fel.omo.transactions;
 
-import cz.cvut.fel.omo.parties.Party;
+import cz.cvut.fel.omo.parties.PartyImpl;
 import cz.cvut.fel.omo.production.product.Operation;
 import cz.cvut.fel.omo.production.product.Product;
 
 public class Transaction extends Operation {
-    private Party receiver;
+    private PartyImpl receiver;
 
 
-    public Transaction(Party party, Party receiver, Product[] products, int day) {
-        super(party, products, day);
+    public Transaction(PartyImpl party, PartyImpl receiver, Product product, int day, String prevBlockHash) {
+        super(party, product, day, prevBlockHash);
         this.receiver = receiver;
     }
 
-    public Party getParty() {
+    public PartyImpl getParty() {
         return party;
     }
 
-    public Party getReceiver() {
+    public PartyImpl getReceiver() {
         return receiver;
     }
 
-    public Product[] getProducts() {
-        return products;
-    }
 
     @Override
     public String toString() {
-        return "Product " + products[0].type + " in transaction from " + party.name + " to Party " + receiver.name + " on " + day + " day";
+        return "Product " + product.type + " in transaction from " + party.name + " to Party " + receiver.name + " on " + day + " day";
 
     }
 }
