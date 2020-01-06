@@ -9,7 +9,7 @@ public interface Storage {
 
     Product get(ProductType type);
 
-    Product[] getProducts(ProductType type, int amount);
+    Product[] takeProducts(ProductType type, int amount);
 
     boolean has(ProductType type, int amount) throws WrongProductTypeException;
 

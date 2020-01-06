@@ -1,5 +1,6 @@
 package cz.cvut.fel.omo.production;
 
+import cz.cvut.fel.omo.production.product.Product;
 import cz.cvut.fel.omo.production.product.ProductType;
 
 public class ProductionProcess {
@@ -9,14 +10,24 @@ public class ProductionProcess {
     private ProductType[] components;
     private int amount;
     private State state;
+    private Product[] result;
 
     public ProductionProcess(ProductType type, int amount, Production production) {
         myType = type;
         this.amount = amount;
+        result = new Product[amount];
         this.production = production;
         components = CookBook.getRecipe(myType);
         if (components.length == 0) state = new Producing(this);
         else state = new Preparation(this);
+    }
+
+    public Product[] getResult() {
+        return result;
+    }
+
+    public void setResult(Product[] result) {
+        this.result = result;
     }
 
     public ProductType[] getComponents() {

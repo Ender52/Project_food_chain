@@ -24,7 +24,7 @@ public abstract class AbstractChannel {
         transaction.getReceiver().receiveProducts(transaction.getProducts());
         int transactionPrice = transaction.getProducts()[0].myPrice.amount * transaction.getProducts().length;
         transaction.getReceiver().changeBalance(-1 * transactionPrice);
-        transaction.getSender().changeBalance(transactionPrice);
+        transaction.getParty().changeBalance(transactionPrice);
         blockChain.addBlock(transaction);
     }
 

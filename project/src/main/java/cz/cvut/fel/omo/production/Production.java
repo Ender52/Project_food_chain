@@ -1,5 +1,7 @@
 package cz.cvut.fel.omo.production;
 
+import cz.cvut.fel.omo.Constans;
+import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
 import cz.cvut.fel.omo.parties.Party;
 import cz.cvut.fel.omo.production.product.ProductType;
 
@@ -9,6 +11,7 @@ import java.util.List;
 public abstract class Production {
     public Storage myStorage;
     public Party owner;
+    private int id = 0;
     public ArrayList<ProductType> myProducts = new ArrayList<>();
     public ArrayList<ProductionProcess> processes = new ArrayList<>();
 
@@ -55,7 +58,21 @@ public abstract class Production {
             if (pp.getState() instanceof End) found.add(pp);
 
         }
+        for (ProductionProcess p : found) {
+            owner.createOperation("Creation", p.getResult());
+            owner.createOperation("Put", p.getResult());
+            try {
+                myStorage.put(p.getResult());
+            } catch (WrongProductTypeException e) {
+                e.printStackTrace();
+            }
+        }
         processes.removeAll(found);
+    }
+
+
+    public int getIdForNewProduct(ProductType productType) {
+        return Constans.getProductTypeNumber(productType) + id++;
     }
 
 }
