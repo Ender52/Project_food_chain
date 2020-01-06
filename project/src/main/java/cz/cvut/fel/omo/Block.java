@@ -1,25 +1,33 @@
 package cz.cvut.fel.omo;
 
-import cz.cvut.fel.omo.transactions.Transaction;
+import cz.cvut.fel.omo.production.product.Operation;
+import cz.cvut.fel.omo.production.product.Product;
 
 public class Block {
-    Transaction myTransaction;
-    String myHash;
+    Operation operation;
     String previousBlockHash;
 
-    Block(Transaction transaction, int number, String prevHash) {
-        myTransaction = transaction;
-        int sum = 0;
-        for (char c : transaction.getSender().name.toCharArray()) sum += c;
-        myHash = Integer.toString(sum + number);
+    Block(Operation operation, String prevHash) {
+        this.operation = operation;
         previousBlockHash = prevHash;
     }
 
-    Block(Transaction transaction, int number) {
-        myTransaction = transaction;
+    Block(Operation operation) {
+        this.operation = operation;
         int sum = 0;
-        for (char c : transaction.getSender().name.toCharArray()) sum += c;
-        myHash = Integer.toString(sum + number);
+    }
+
+    public String getMyHash() {
+        StringBuilder sb = new StringBuilder();
+        int i = 0;
+        for (char ch : operation.toString().toCharArray()) {
+            i += ch;
+        }
+        sb.append(i);
+        for (Product product : operation.products) {
+            sb.append(product.getId());
+        }
+        return sb.toString();
     }
 
 }
