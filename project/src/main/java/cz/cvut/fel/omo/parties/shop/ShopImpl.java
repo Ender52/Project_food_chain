@@ -88,7 +88,7 @@ public class ShopImpl extends PartyImpl implements Shop {
                 myProducts.add(ProductType.BUN_WITH_ORANGE_JAM);
             if (myProduction.myStorage.has(ProductType.MILK, 1)) myProducts.add(ProductType.MILK);
             if (myProduction.myStorage.has(ProductType.ORANGE, 1)) myProducts.add(ProductType.ORANGE);
-            if (myProduction.myStorage.has(ProductType.SAUSAGE, 1)) myProducts.add(ProductType.SAUSAGE);
+//            if (myProduction.myStorage.has(ProductType.SAUSAGE, 1)) myProducts.add(ProductType.SAUSAGE);
         } catch (WrongProductTypeException e) {
             e.printStackTrace();
         }

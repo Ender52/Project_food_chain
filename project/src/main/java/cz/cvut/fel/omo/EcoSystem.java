@@ -121,9 +121,9 @@ public class EcoSystem {
                 p.checkRequestsToMe();
                 p.work();
             }
-//            for (Customer c : customers) {
-//                c.act();
-//            }
+            for (Customer c : customers) {
+                c.act();
+            }
 
             blockChain.sequre();
             day++;
@@ -167,7 +167,6 @@ public class EcoSystem {
                     shop = new ShopImpl(name, this, partyId++);
                     parties.add(shop);
                 }
-
                 break;
             case 'W':
                 parties.add(new WheatFarmer(name, this, partyId++));
