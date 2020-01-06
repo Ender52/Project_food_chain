@@ -33,6 +33,21 @@ public class BakeryProductionStorage implements Storage {
     }
 
     @Override
+    public void put(Product product) throws WrongProductTypeException {
+        if (product.type == ProductType.BREAD) {
+            bread.add(product);
+        } else if (product.type == ProductType.BUN_WITH_ORANGE_JAM) {
+            bunWithJam.add(product);
+        } else if (product.type == ProductType.WHEAT) {
+            wheat.add(product);
+        } else if (product.type == ProductType.ORANGE) {
+            oranges.add(product);
+        } else {
+            throw exception;
+        }
+    }
+
+    @Override
     public Product get(ProductType type) {
         if (type == ProductType.BREAD) {
             return bread.get(0);
@@ -79,8 +94,22 @@ public class BakeryProductionStorage implements Storage {
     }
 
     @Override
-    public boolean has(ProductType type, int amount) throws WrongProductTypeException {
+    public int size(ProductType type) throws WrongProductTypeException {
+        if (type == ProductType.BREAD) {
+            return bread.size();
+        } else if (type == ProductType.BUN_WITH_ORANGE_JAM) {
+            return bunWithJam.size();
+        } else if (type == ProductType.WHEAT) {
+            return wheat.size();
+        } else if (type == ProductType.ORANGE) {
+            return oranges.size();
+        } else {
+            throw exception;
+        }
+    }
 
+    @Override
+    public boolean has(ProductType type, int amount) throws WrongProductTypeException {
         if (type == ProductType.BREAD) {
             return bread.size() >= amount;
         } else if (type == ProductType.BUN_WITH_ORANGE_JAM) {
@@ -91,7 +120,6 @@ public class BakeryProductionStorage implements Storage {
             return oranges.size() >= amount;
         } else {
             throw exception;
-
         }
     }
 }

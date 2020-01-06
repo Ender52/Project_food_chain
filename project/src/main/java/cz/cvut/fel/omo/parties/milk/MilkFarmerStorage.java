@@ -27,6 +27,17 @@ public class MilkFarmerStorage implements Storage {
     }
 
     @Override
+    public void put(Product product) throws WrongProductTypeException {
+        if (product.type == ProductType.MILK) {
+            milk.add(product);
+        } else if (product.type == ProductType.MEAT) {
+            meat.add(product);
+        } else {
+            throw exception;
+        }
+    }
+
+    @Override
     public Product get(ProductType type) {
         if (type == ProductType.MILK) return milk.remove(0);
         else if (type == ProductType.MEAT) return meat.remove(0);
@@ -56,4 +67,17 @@ public class MilkFarmerStorage implements Storage {
         else if (type == ProductType.MEAT) return meat.size() >= amount;
         else throw exception;
     }
+
+    @Override
+    public int size(ProductType type) throws WrongProductTypeException {
+        if (type == ProductType.MILK) {
+            return milk.size();
+        } else if (type == ProductType.MEAT) {
+            return meat.size();
+        } else {
+            throw exception;
+
+        }
+    }
+
 }

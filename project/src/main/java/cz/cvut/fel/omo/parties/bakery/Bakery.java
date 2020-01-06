@@ -2,14 +2,14 @@ package cz.cvut.fel.omo.parties.bakery;
 
 import cz.cvut.fel.omo.EcoSystem;
 import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
-import cz.cvut.fel.omo.parties.Party;
+import cz.cvut.fel.omo.parties.PartyImpl;
 import cz.cvut.fel.omo.production.product.ProductType;
 import cz.cvut.fel.omo.transactions.BakeryChannel;
 import cz.cvut.fel.omo.transactions.Money;
 import cz.cvut.fel.omo.transactions.OrangesChannel;
 import cz.cvut.fel.omo.transactions.Request;
 
-public class Bakery extends Party {
+public class Bakery extends PartyImpl {
     BakeryChannel bakeryChannel;
     OrangesChannel orangesChannel;
 
@@ -38,8 +38,8 @@ public class Bakery extends Party {
             if (r.productType == ProductType.BREAD || r.productType == ProductType.BUN_WITH_ORANGE_JAM) {
                 try {
                     if (myProduction.getMyStorage().has(r.productType, r.amount)) {
-//                        responseToRequest(r);
-                        violateDoubleSpend(r);
+                        responseToRequest(r);
+//                        violateDoubleSpend(r);
                         wasAction = true;
                         break;
                     } else {
@@ -51,7 +51,7 @@ public class Bakery extends Party {
                 }
             }
         }
-        if (!wasAction) startProduceProducts(ProductType.BREAD, 50);
+//        if (!wasAction) startProduceProducts(ProductType.BREAD, 50);
     }
 
     @Override

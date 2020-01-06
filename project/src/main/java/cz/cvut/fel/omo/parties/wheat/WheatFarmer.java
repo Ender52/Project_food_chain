@@ -2,13 +2,13 @@ package cz.cvut.fel.omo.parties.wheat;
 
 import cz.cvut.fel.omo.EcoSystem;
 import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
-import cz.cvut.fel.omo.parties.Party;
+import cz.cvut.fel.omo.parties.PartyImpl;
 import cz.cvut.fel.omo.production.product.ProductType;
 import cz.cvut.fel.omo.transactions.BakeryChannel;
 import cz.cvut.fel.omo.transactions.Money;
 import cz.cvut.fel.omo.transactions.Request;
 
-public class WheatFarmer extends Party {
+public class WheatFarmer extends PartyImpl {
     BakeryChannel bakeryChannel;
 
     public WheatFarmer(String name, EcoSystem e, int id) {
@@ -42,7 +42,7 @@ public class WheatFarmer extends Party {
                 }
             }
         }
-        if (!wasAction) startProduceProducts(ProductType.WHEAT, 50);
+//        if (!wasAction) startProduceProducts(ProductType.WHEAT, 50);
     }
 
 }

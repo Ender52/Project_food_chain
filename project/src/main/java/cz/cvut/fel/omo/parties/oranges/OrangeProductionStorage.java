@@ -24,6 +24,15 @@ public class OrangeProductionStorage implements Storage {
     }
 
     @Override
+    public void put(Product product) throws WrongProductTypeException {
+        if (product.type == ProductType.ORANGE) {
+            oranges.add(product);
+        } else {
+            throw exception;
+        }
+    }
+
+    @Override
     public Product get(ProductType type) {
         if (type == ProductType.ORANGE) return oranges.remove(0);
         else return null;
@@ -44,5 +53,15 @@ public class OrangeProductionStorage implements Storage {
     public boolean has(ProductType type, int amount) throws WrongProductTypeException {
         if (type == ProductType.ORANGE) return oranges.size() >= amount;
         else throw exception;
+    }
+
+    @Override
+    public int size(ProductType type) throws WrongProductTypeException {
+        if (type == ProductType.ORANGE) {
+            return oranges.size();
+        } else {
+            throw exception;
+
+        }
     }
 }

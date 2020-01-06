@@ -24,6 +24,15 @@ public class WheatFarmerStorage implements Storage {
     }
 
     @Override
+    public void put(Product product) throws WrongProductTypeException {
+        if (product.type == ProductType.WHEAT) {
+            wheat.add(product);
+        } else {
+            throw exception;
+        }
+    }
+
+    @Override
     public Product get(ProductType type) {
         if (type == ProductType.WHEAT) return wheat.remove(0);
         else return null;
@@ -44,5 +53,15 @@ public class WheatFarmerStorage implements Storage {
     public boolean has(ProductType type, int amount) throws WrongProductTypeException {
         if (type == ProductType.WHEAT) return wheat.size() >= amount;
         else throw exception;
+    }
+
+    @Override
+    public int size(ProductType type) throws WrongProductTypeException {
+        if (type == ProductType.WHEAT) {
+            return wheat.size();
+        } else {
+            throw exception;
+
+        }
     }
 }

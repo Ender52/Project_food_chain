@@ -1,13 +1,13 @@
 package cz.cvut.fel.omo.parties.bakery;
 
-import cz.cvut.fel.omo.parties.Party;
+import cz.cvut.fel.omo.parties.PartyImpl;
 import cz.cvut.fel.omo.production.Production;
 import cz.cvut.fel.omo.production.ProductionProcess;
 import cz.cvut.fel.omo.production.product.ProductType;
 
 public class BakeryProduction extends Production {
 
-    public BakeryProduction(Party manufacturer) {
+    public BakeryProduction(PartyImpl manufacturer) {
         super(manufacturer);
         myStorage = new BakeryProductionStorage();
         myProducts.add(ProductType.BREAD);

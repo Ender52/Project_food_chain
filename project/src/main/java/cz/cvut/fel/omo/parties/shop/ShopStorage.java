@@ -34,6 +34,21 @@ public class ShopStorage implements Storage {
     }
 
     @Override
+    public void put(Product product) throws WrongProductTypeException {
+        if (product.type == ProductType.BREAD) {
+            bread.add(product);
+        } else if (product.type == ProductType.BUN_WITH_ORANGE_JAM) {
+            bunWithJam.add(product);
+        } else if (product.type == ProductType.MILK) {
+            milk.add(product);
+        } else if (product.type == ProductType.ORANGE) {
+            oranges.add(product);
+        } else {
+            throw exception;
+        }
+    }
+
+    @Override
     public Product get(ProductType type) {
         if (type == ProductType.BREAD) {
             return bread.remove(0);
@@ -90,6 +105,22 @@ public class ShopStorage implements Storage {
             return milk.size() >= amount;
         } else if (type == ProductType.ORANGE) {
             return oranges.size() >= amount;
+        } else {
+            throw exception;
+
+        }
+    }
+
+    @Override
+    public int size(ProductType type) throws WrongProductTypeException {
+        if (type == ProductType.BREAD) {
+            return bread.size();
+        } else if (type == ProductType.BUN_WITH_ORANGE_JAM) {
+            return bunWithJam.size();
+        } else if (type == ProductType.MILK) {
+            return milk.size();
+        } else if (type == ProductType.ORANGE) {
+            return oranges.size();
         } else {
             throw exception;
 

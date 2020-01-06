@@ -2,14 +2,14 @@ package cz.cvut.fel.omo.parties.milk;
 
 import cz.cvut.fel.omo.EcoSystem;
 import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
-import cz.cvut.fel.omo.parties.Party;
+import cz.cvut.fel.omo.parties.PartyImpl;
 import cz.cvut.fel.omo.production.product.ProductType;
 import cz.cvut.fel.omo.transactions.MeatProductionChannel;
 import cz.cvut.fel.omo.transactions.MilkProductionChannel;
 import cz.cvut.fel.omo.transactions.Money;
 import cz.cvut.fel.omo.transactions.Request;
 
-public class MilkFarmer extends Party {
+public class MilkFarmer extends PartyImpl {
     MilkProductionChannel milkChannel;
     MeatProductionChannel meatChannel;
 
@@ -62,7 +62,7 @@ public class MilkFarmer extends Party {
                 }
             }
         }
-        if (!wasAction) startProduceProducts(ProductType.MILK, 50);
+//        if (!wasAction) startProduceProducts(ProductType.MILK, 50);
     }
 }
 
