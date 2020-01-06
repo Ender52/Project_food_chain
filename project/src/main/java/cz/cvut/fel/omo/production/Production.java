@@ -1,6 +1,6 @@
 package cz.cvut.fel.omo.production;
 
-import cz.cvut.fel.omo.Constans;
+import cz.cvut.fel.omo.Constants;
 import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
 import cz.cvut.fel.omo.parties.Party;
 import cz.cvut.fel.omo.production.product.ProductType;
@@ -72,7 +72,7 @@ public abstract class Production {
 
 
     public int getIdForNewProduct(ProductType productType) {
-        return Constans.getProductTypeNumber(productType) + id++;
+        return Constants.getProductTypeNumber(productType) + id++;
     }
 
 }
