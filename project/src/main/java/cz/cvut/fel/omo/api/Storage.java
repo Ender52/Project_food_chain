@@ -26,6 +26,7 @@ public interface Storage {
     void put(Product product) throws WrongProductTypeException;
 
     /**
+     * sdfsdfsdfsfefwefwewef
      * @param type
      * @return
      * @throws WrongProductTypeException
