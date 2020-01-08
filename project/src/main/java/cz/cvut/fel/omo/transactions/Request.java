@@ -1,16 +1,17 @@
 package cz.cvut.fel.omo.transactions;
 
-import cz.cvut.fel.omo.parties.PartyImpl;
-import cz.cvut.fel.omo.production.product.ProductType;
+import cz.cvut.fel.omo.api.Party;
+import cz.cvut.fel.omo.api.ProductType;
+import cz.cvut.fel.omo.api.impl.ChannelImpl;
 
 public class Request {
 
     public final ProductType productType;
-    public final PartyImpl sender;
+    public final Party sender;
     public final int amount;
-    public final AbstractChannel channel;
+    public final ChannelImpl channel;
 
-    public Request(ProductType pType, PartyImpl sender, int amount, AbstractChannel channel) {
+    public Request(ProductType pType, Party sender, int amount, ChannelImpl channel) {
         productType = pType;
         this.sender = sender;
         this.amount = amount;
