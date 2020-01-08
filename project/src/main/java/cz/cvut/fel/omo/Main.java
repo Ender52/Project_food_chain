@@ -7,8 +7,7 @@ public class Main {
 
         EcoSystem ecoSystem = new EcoSystem(new BlockChain());
         ecoSystem.prepLounch();
-
-//        ecoSystem.lounch();
+//        ecoSystem.launch();
 
     }
 

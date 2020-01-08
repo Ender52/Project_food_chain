@@ -1,13 +1,15 @@
 package cz.cvut.fel.omo;
 
-import cz.cvut.fel.omo.parties.PartyImpl;
-import cz.cvut.fel.omo.parties.bakery.Bakery;
-import cz.cvut.fel.omo.parties.milk.MilkFarmer;
-import cz.cvut.fel.omo.parties.oranges.OrangeFarmer;
-import cz.cvut.fel.omo.parties.shop.ShopImpl;
-import cz.cvut.fel.omo.parties.wheat.WheatFarmer;
+import cz.cvut.fel.omo.api.Party;
+import cz.cvut.fel.omo.api.ProductType;
+import cz.cvut.fel.omo.api.Storage;
+import cz.cvut.fel.omo.api.impl.ShopImpl;
+import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
+import cz.cvut.fel.omo.parties.Bakery;
+import cz.cvut.fel.omo.parties.MilkFarmer;
+import cz.cvut.fel.omo.parties.OrangeFarmer;
+import cz.cvut.fel.omo.parties.WheatFarmer;
 import cz.cvut.fel.omo.production.product.Product;
-import cz.cvut.fel.omo.production.product.ProductType;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
@@ -18,10 +20,11 @@ public class EcoSystem {
     private BlockChain blockChain;
     private int day = 0;
     Scanner in = new Scanner(System.in);
-    private List<PartyImpl> parties = new ArrayList<>();
+    private List<Party> parties = new ArrayList<>();
     private int partyId = 0;
     private List<Customer> customers = new ArrayList<>();
     private ShopImpl shop;
+    private boolean report = false;
 
     public EcoSystem(BlockChain bc) {
         blockChain = bc;
@@ -31,11 +34,11 @@ public class EcoSystem {
         return day;
     }
 
-    public List<PartyImpl> getParties() {
+    public List<Party> getParties() {
         return parties;
     }
 
-    public void setParties(List<PartyImpl> parties) {
+    public void setParties(List<Party> parties) {
         this.parties = parties;
     }
 
@@ -48,13 +51,24 @@ public class EcoSystem {
         createParty('O', "ORANGE FARMER");
         createParty('W', "WHEAT FARMER");
         createParty('B', "BAKERY");
+
+        createParty('M', "MILK FARMER2");
+        createParty('O', "ORANGE FARMER2");
+        createParty('W', "WHEAT FARMER2");
+        createParty('B', "BAKERY2");
+
+        createParty('M', "MILK FARMER3");
+        createParty('O', "ORANGE FARMER3");
+        createParty('W', "WHEAT FARMER3");
+        createParty('B', "BAKERY3TR");
+
         createParty('S', "SHOP");
-        setCustomers(5);
-        startSimulation(20);
+        setCustomers(10);
+        startSimulation(100);
         afterActions();
     }
 
-    public void lounch() {
+    public void launch() {
         System.out.println("Welkom to FoodChain Simulation. At first define a shop. Type name of the shop");
         String shopName = in.nextLine();
         createParty('S', shopName);
@@ -93,10 +107,14 @@ public class EcoSystem {
     }
 
     private void afterActions() {
-        System.out.println("\nSimulation ended. You con see reports or start simulation again.\nTo start again type \"start again\"");
+        System.out.println("\nSimulation ended. You con see reports or start simulation again.\nTo start again type \"start again\"\nTo see transaction report type \"TR\"\nTo see sequrity report type \"SR\"\nTo see food chain report type \"FR\"");
         String str = in.nextLine();
         if (str.equals("start again")) readStepsAndStart();
-        foodChainReport(shop.myProduction.myStorage.get(ProductType.BUN_WITH_ORANGE_JAM));
+        else if (str.equals("TR")) transactionReport();
+        else if (str.equals("SR")) sequrityReport();
+        else if (str.equals("FR")) foodChainReport();
+
+
 
     }
 
@@ -117,7 +135,7 @@ public class EcoSystem {
                 System.err.println("BlockChain is not sequred");
                 break;
             }
-            for (PartyImpl p : parties) {
+            for (Party p : parties) {
                 p.checkRequestsToMe();
                 p.work();
             }
@@ -125,7 +143,7 @@ public class EcoSystem {
                 c.act();
             }
 
-            blockChain.sequre();
+            blockChain.sequre(day);
             day++;
         }
     }
@@ -141,14 +159,107 @@ public class EcoSystem {
     }
 
     public void partiesReport() {
+        report = true;
+    }
+
+    private void sequrityReport() {
+        StringBuilder sb = new StringBuilder();
+        List<Pair<Integer, String>> doubleSpends = blockChain.getRegulator().getReportStrings();
+        List<Pair<Integer, String>> fakes = blockChain.getFaked();
+        doubleSpends.forEach(pair -> {
+            System.out.println("DAY " + pair.getKey() + "\n" + pair.getValue());
+        });
+        fakes.forEach(pair -> {
+            System.out.println("DAY " + pair.getKey() + "\n" + pair.getValue());
+        });
+        var ref = new Object() {
+            int cDay = 0;
+        };
+
+        while (ref.cDay <= this.day) {
+            {
+                boolean typed = false;
+                sb.append("DAY " + day + " :\n");
+                doubleSpends.stream().filter(pair -> pair.getKey() == ref.cDay).forEach(pair -> {
+                    sb.append(pair.getValue() + "\n");
+                });
+                fakes.stream().filter(pair -> pair.getKey() == ref.cDay).forEach(pair -> {
+                    sb.append(pair.getValue() + "\n");
+                });
+//            if(sb.toString().equals("DAY "+ day+ " :\n")) sb.
+//            ref.cDay++;
+            }
+        }
+//        int day =0;
+//        int doubleSpendsCounter= 0;
+//        int fakesCounter= 0;
+//        Pair<Operation, Integer> pairF = blockChain.getFaked().get(fakesCounter);
+//        Pair<Integer, String> pairD = doubleSpends.get(doubleSpendsCounter);
+//        boolean dayTyped= false;
+//        while (day <= this.day){
+//            if(pairF.getValue() != day && pairD.getKey() != day) {
+//                day++;
+//                dayTyped = false;
+//                continue;
+//            }else {
+//                if(!dayTyped){
+//                    sb.append("DAY ");
+//                    sb.append(day);
+//                    sb.append(" :\n");
+//                    dayTyped = true;
+//                }
+//                if (pairF.getValue() == day) {
+//                    sb.append("Somebody tried to fake block with operation: ");
+//                    sb.append(pairF.getKey().toString());
+//                    sb.append("\n");
+//                    if(fakesCounter <= blockChain.getFaked().size()-2) fakesCounter++;
+//                    if(fakesCounter == blockChain.getFaked().size()-1) break;
+//                    pairF = blockChain.getFaked().get(fakesCounter);
+//                }
+//                if (pairD.getKey() == day) {
+//                    sb.append(pairD.getValue());
+//                    sb.append("\n");
+//                    if(doubleSpendsCounter <= blockChain.getRegulator().getReportStrings().size()-2) {
+//                        doubleSpendsCounter++;
+//                    }
+//                    if(doubleSpendsCounter == blockChain.getRegulator().getReportStrings().size()-1) { break;}
+//                    pairD = doubleSpends.get(doubleSpendsCounter);
+//                }
+//            }
+//
+//        }
+//        System.out.println(sb.toString());
+
 
     }
 
-    public void foodChainReport(Product product) {
-        System.out.println("FOOD CHAIN REPORT");
+    private void transactionReport() {
+        System.out.println(blockChain.getTransactionReporter().getReportString());
+    }
+
+    public void foodChainReport() {
+        parties.forEach(party -> {
+            Storage storage = party.getMyProduction().getMyStorage();
+            for (ProductType productType : storage.getMyProducts()) {
+                try {
+                    if (storage.has(productType, 1)) {
+                        showProductReport(storage.get(productType));
+                        System.out.println();
+                    }
+                } catch (WrongProductTypeException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void showProductReport(Product product) {
         int id = product.getId();
+        System.out.println("FOOD CHAIN REPORT.\nProduct #" + id + "\n");
         blockChain.getChain().stream().filter(operation -> operation.product.getId() == id).forEach(System.out::println);
     }
+
+
     void createParty(char type, String name) {
         switch (type) {
             case 'B':

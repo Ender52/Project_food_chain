@@ -1,6 +1,6 @@
 package cz.cvut.fel.omo;
 
-import cz.cvut.fel.omo.production.product.ProductType;
+import cz.cvut.fel.omo.api.ProductType;
 
 public class Constants {
     static final int MILK = 1000000;

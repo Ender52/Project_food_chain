@@ -1,6 +1,7 @@
 package cz.cvut.fel.omo;
 
-import cz.cvut.fel.omo.production.product.ProductType;
+import cz.cvut.fel.omo.api.ProductType;
+import cz.cvut.fel.omo.api.Shop;
 import javafx.util.Pair;
 
 import java.util.List;

@@ -1,13 +1,17 @@
 package cz.cvut.fel.omo;
 
-import cz.cvut.fel.omo.parties.PartyImpl;
 import cz.cvut.fel.omo.transactions.Transaction;
+import javafx.util.Pair;
 
 import java.util.*;
 
 public class DoubleSpendingRegulator {
     private Map<Integer, Set<Integer>> myMap = new HashMap<>();
-    private List<PartyImpl> violators = new ArrayList<>();
+    private List<Pair<Integer, String>> reportStrings = new ArrayList<>();
+
+    public List<Pair<Integer, String>> getReportStrings() {
+        return reportStrings;
+    }
 
     public void validateTransaction(Transaction transaction) {
         int id = transaction.getParty().getId();
@@ -21,8 +25,9 @@ public class DoubleSpendingRegulator {
         } else {
             Set<Integer> set = myMap.get(id);
             if (!set.add(newId)) {
-                violators.add(transaction.getParty());
-                System.err.println("PARTY " + transaction.getParty().name + " TRIED TO DOUBLE SPEND");
+                reportStrings.add(new Pair<>(transaction.day, "Party " + transaction.getParty().getName() + " tried to double spend selling " + transaction.product.type));
+
+                System.err.println("PARTY " + transaction.getParty().getName() + " TRIED TO DOUBLE SPEND");
             }
         }
 
