@@ -1,6 +1,7 @@
 package cz.cvut.fel.omo.api;
 
 import cz.cvut.fel.omo.production.ProductionProcess;
+import cz.cvut.fel.omo.production.product.Product;
 
 public interface Production {
     int getId();
@@ -15,7 +16,7 @@ public interface Production {
 
     void startProducingProducts(ProductType type, int amount);
 
-    void produce();
+    Product[] produce();
 
     int getIdForNewProduct(ProductType productType);
 }

@@ -28,7 +28,7 @@ public class Producing extends State {
                 } catch (WrongProductTypeException e) {
                     e.printStackTrace();
                 }
-                for (Product p : allComps[k]) context.getProduction().getOwner().createOperation("Take", p);
+                for (Product p : allComps[k]) context.getProduction().getOwner().createOp("Take", p);
                 k++;
             }
             for (int i = 0; i < 10; ++i) {
@@ -61,7 +61,7 @@ public class Producing extends State {
                 } catch (WrongProductTypeException e) {
                     e.printStackTrace();
                 }
-                for (Product p : allComps[k]) context.getProduction().getOwner().createOperation("Take", p);
+                for (Product p : allComps[k]) context.getProduction().getOwner().createOp("Take", p);
 
                 k++;
             }

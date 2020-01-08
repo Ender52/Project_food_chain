@@ -17,7 +17,7 @@ import cz.cvut.fel.omo.transactions.TransactionForReport;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class PartyImpl implements Party, Observer {
+public abstract class PartyImpl implements Party, Observer, OperationFactory {
     protected final String name;
     protected Production myProduction;
     protected BlockChain blockChain;
@@ -114,7 +114,18 @@ public abstract class PartyImpl implements Party, Observer {
 
     @Override
     public void work() {
-        if (myProduction != null) myProduction.produce();
+        if (myProduction != null) {
+            Product[] res = myProduction.produce();
+            if (res.length > 0) {
+                for (Product product : res) createOperation("Creation", product);
+                for (Product product : res) createOperation("Put", product);
+                try {
+                    myProduction.getMyStorage().put(res);
+                } catch (WrongProductTypeException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     @Override
@@ -171,7 +182,7 @@ public abstract class PartyImpl implements Party, Observer {
     }
 
     @Override
-    public void createOperation(String type, Product product) {
+    public Operation createOperation(String type, Product product) {
         Operation operation;
         String prevHash = blockChain.getChain().size() == 0 ? "" : blockChain.getChain().get(blockChain.getChain().size() - 1).getMyHash();
         if (type.equals("Creation")) {
@@ -185,6 +196,7 @@ public abstract class PartyImpl implements Party, Observer {
             System.err.println("Wrong Operation type");
         }
         blockChain.addBlock(operation);
+        return operation;
     }
 
     private void violateChangeDateOfProduction(Product product) {
@@ -247,5 +259,11 @@ public abstract class PartyImpl implements Party, Observer {
     public void update(Request request, boolean added) {
         if (added) requestsToMe.add(request);
         else requestsToMe.remove(request);
+    }
+
+
+    @Override
+    public void createOp(String type, Product product) {
+        createOperation(type, product);
     }
 }

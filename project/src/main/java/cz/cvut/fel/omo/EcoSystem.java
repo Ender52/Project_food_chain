@@ -1,6 +1,7 @@
 package cz.cvut.fel.omo;
 
 import cz.cvut.fel.omo.api.Party;
+import cz.cvut.fel.omo.api.PartyFactory;
 import cz.cvut.fel.omo.api.ProductType;
 import cz.cvut.fel.omo.api.Storage;
 import cz.cvut.fel.omo.api.impl.ShopImpl;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class EcoSystem {
+public class EcoSystem implements PartyFactory {
     private static EcoSystem INSTANCE;
     private static String info = "Initial EcoSystem class";
     private BlockChain blockChain;
@@ -56,22 +57,25 @@ public class EcoSystem {
     }
 
     public void prepLounch() {
-        createParty('M', "MILK FARMER");
-        createParty('O', "ORANGE FARMER");
-        createParty('W', "WHEAT FARMER");
-        createParty('B', "BAKERY");
 
-        createParty('M', "MILK FARMER2");
-        createParty('O', "ORANGE FARMER2");
-        createParty('W', "WHEAT FARMER2");
-        createParty('B', "BAKERY2");
+        parties.add(createParty('M', "MILK FARMER"));
+        parties.add(createParty('O', "O FARMER"));
+        parties.add(createParty('W', "W FARMER"));
+        parties.add(createParty('B', "BER"));
 
-        createParty('M', "MILK FARMER3");
-        createParty('O', "ORANGE FARMER3");
-        createParty('W', "WHEAT FARMER3");
-        createParty('B', "BAKERY3TR");
+        parties.add(createParty('M', "MILK FARMER2"));
+        parties.add(createParty('O', "O FARMER2"));
+        parties.add(createParty('W', "W FARMER2"));
+        parties.add(createParty('B', "BER2"));
 
-        createParty('S', "SHOP");
+        parties.add(createParty('M', "MILK FARMER2"));
+        parties.add(createParty('O', "O FARMER2"));
+        parties.add(createParty('W', "W FARMER2"));
+        parties.add(createParty('B', "BER2"));
+
+        parties.add(createParty('S', "SHOP"));
+
+
         setCustomers(10);
         startSimulation(100);
         afterActions();
@@ -154,7 +158,7 @@ public class EcoSystem {
 
     public void setCustomers(int amount) {
         if (shop == null) {
-            System.err.println("NO SHOP DEFINED");
+            System.err.println("O SHOP DEFINED");
             return;
         }
         for (int i = 0; i < amount; i++) {
@@ -190,50 +194,8 @@ public class EcoSystem {
                 fakes.stream().filter(pair -> pair.getKey() == ref.cDay).forEach(pair -> {
                     sb.append(pair.getValue() + "\n");
                 });
-//            if(sb.toString().equals("DAY "+ day+ " :\n")) sb.
-//            ref.cDay++;
             }
         }
-//        int day =0;
-//        int doubleSpendsCounter= 0;
-//        int fakesCounter= 0;
-//        Pair<Operation, Integer> pairF = blockChain.getFaked().get(fakesCounter);
-//        Pair<Integer, String> pairD = doubleSpends.get(doubleSpendsCounter);
-//        boolean dayTyped= false;
-//        while (day <= this.day){
-//            if(pairF.getValue() != day && pairD.getKey() != day) {
-//                day++;
-//                dayTyped = false;
-//                continue;
-//            }else {
-//                if(!dayTyped){
-//                    sb.append("DAY ");
-//                    sb.append(day);
-//                    sb.append(" :\n");
-//                    dayTyped = true;
-//                }
-//                if (pairF.getValue() == day) {
-//                    sb.append("Somebody tried to fake block with operation: ");
-//                    sb.append(pairF.getKey().toString());
-//                    sb.append("\n");
-//                    if(fakesCounter <= blockChain.getFaked().size()-2) fakesCounter++;
-//                    if(fakesCounter == blockChain.getFaked().size()-1) break;
-//                    pairF = blockChain.getFaked().get(fakesCounter);
-//                }
-//                if (pairD.getKey() == day) {
-//                    sb.append(pairD.getValue());
-//                    sb.append("\n");
-//                    if(doubleSpendsCounter <= blockChain.getRegulator().getReportStrings().size()-2) {
-//                        doubleSpendsCounter++;
-//                    }
-//                    if(doubleSpendsCounter == blockChain.getRegulator().getReportStrings().size()-1) { break;}
-//                    pairD = doubleSpends.get(doubleSpendsCounter);
-//                }
-//            }
-//
-//        }
-//        System.out.println(sb.toString());
-
 
     }
 
@@ -263,29 +225,34 @@ public class EcoSystem {
         blockChain.getChain().stream().filter(operation -> operation.product.getId() == id).forEach(System.out::println);
     }
 
-
-    void createParty(char type, String name) {
+    @Override
+    public Party createParty(char type, String name) {
+        Party res = null;
         switch (type) {
             case 'B':
-                parties.add(new Bakery(name, partyId++));
+                res = new Bakery(name, partyId++);
                 break;
             case 'M':
-                parties.add(new MilkFarmer(name, partyId++));
+                res = new MilkFarmer(name, partyId++);
+
                 break;
             case 'O':
-                parties.add(new OrangeFarmer(name, partyId++));
+                res = new OrangeFarmer(name, partyId++);
                 break;
             case 'S':
                 if (shop != null) {
                     System.err.println("Only one shop in simulation");
                 } else {
-                    shop = new ShopImpl(name, partyId++);
-                    parties.add(shop);
+                    res = new ShopImpl(name, partyId++);
+
+                    shop = (ShopImpl) res;
+
                 }
                 break;
             case 'W':
-                parties.add(new WheatFarmer(name,  partyId++));
+                res = new WheatFarmer(name, partyId++);
                 break;
         }
+        return res;
     }
 }

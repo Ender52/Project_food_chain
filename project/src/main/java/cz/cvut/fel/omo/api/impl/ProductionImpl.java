@@ -5,7 +5,6 @@ import cz.cvut.fel.omo.api.Party;
 import cz.cvut.fel.omo.api.ProductType;
 import cz.cvut.fel.omo.api.Production;
 import cz.cvut.fel.omo.api.Storage;
-import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
 import cz.cvut.fel.omo.production.End;
 import cz.cvut.fel.omo.production.ProductionProcess;
 import cz.cvut.fel.omo.production.product.Product;
@@ -54,20 +53,15 @@ public class ProductionImpl implements Production {
     }
 
 
-    public void produce() {
-        if (currentProcess == null) return;
+    public Product[] produce() {
+        Product[] res = new Product[0];
+        if (currentProcess == null) return res;
         currentProcess.timeLapseTick();
         if (currentProcess.getState() instanceof End) {
-            Product[] res = currentProcess.getResult();
-            for (Product product : res) owner.createOperation("Creation", product);
-            for (Product product : res) owner.createOperation("Put", product);
-            try {
-                myStorage.put(res);
-            } catch (WrongProductTypeException e) {
-                e.printStackTrace();
-            }
+            res = currentProcess.getResult();
             currentProcess = null;
         }
+        return res;
     }
 
 
