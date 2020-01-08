@@ -28,10 +28,10 @@ public abstract class PartyImpl implements Party, Observer {
     protected int id;
     protected List<Request> requestsToMe = new ArrayList<>();
 
-    public PartyImpl(String name, EcoSystem ecoSystem, int id) {
+    public PartyImpl(String name, int id) {
         System.out.println("Party " + name + " created");
         this.name = name;
-        this.ecoSystem = ecoSystem;
+        this.ecoSystem = EcoSystem.getInstance();
         this.blockChain = ecoSystem.getBlockChain();
         this.id = id;
         myProducts = new ProductType[0];

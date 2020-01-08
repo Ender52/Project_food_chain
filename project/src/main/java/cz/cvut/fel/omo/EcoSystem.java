@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class EcoSystem {
+    private static EcoSystem INSTANCE;
+    private static String info = "Initial EcoSystem class";
     private BlockChain blockChain;
     private int day = 0;
     Scanner in = new Scanner(System.in);
@@ -28,6 +30,13 @@ public class EcoSystem {
 
     public EcoSystem(BlockChain bc) {
         blockChain = bc;
+    }
+
+    public synchronized static EcoSystem getInstance(){
+        if (INSTANCE == null) {
+            INSTANCE = new EcoSystem(new BlockChain());
+        }
+        return INSTANCE;
     }
 
     public int getDay() {
@@ -258,27 +267,25 @@ public class EcoSystem {
     void createParty(char type, String name) {
         switch (type) {
             case 'B':
-                parties.add(new Bakery(name, this, partyId++));
+                parties.add(new Bakery(name, partyId++));
                 break;
             case 'M':
-                parties.add(new MilkFarmer(name, this, partyId++));
+                parties.add(new MilkFarmer(name, partyId++));
                 break;
             case 'O':
-                parties.add(new OrangeFarmer(name, this, partyId++));
+                parties.add(new OrangeFarmer(name, partyId++));
                 break;
             case 'S':
                 if (shop != null) {
                     System.err.println("Only one shop in simulation");
                 } else {
-                    shop = new ShopImpl(name, this, partyId++);
+                    shop = new ShopImpl(name, partyId++);
                     parties.add(shop);
                 }
                 break;
             case 'W':
-                parties.add(new WheatFarmer(name, this, partyId++));
+                parties.add(new WheatFarmer(name,  partyId++));
                 break;
         }
     }
-
-
 }

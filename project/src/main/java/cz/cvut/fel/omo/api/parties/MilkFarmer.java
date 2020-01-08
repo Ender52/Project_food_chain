@@ -1,6 +1,5 @@
 package cz.cvut.fel.omo.api.parties;
 
-import cz.cvut.fel.omo.EcoSystem;
 import cz.cvut.fel.omo.api.ProductType;
 import cz.cvut.fel.omo.api.impl.PartyImpl;
 import cz.cvut.fel.omo.api.impl.ProductionImpl;
@@ -8,12 +7,21 @@ import cz.cvut.fel.omo.transactions.MeatProductionChannel;
 import cz.cvut.fel.omo.transactions.MilkProductionChannel;
 import cz.cvut.fel.omo.transactions.Money;
 
+/**
+ * <p>Party that produces Milks and Meats</p>
+ */
 public class MilkFarmer extends PartyImpl {
     MilkProductionChannel milkChannel;
     MeatProductionChannel meatChannel;
 
-    public MilkFarmer(String name, EcoSystem ecoSystem, int id) {
-        super(name, ecoSystem, id);
+    /**
+     * <p>The constructor</p>
+     *
+     * @param name The name of given milkFarmer
+     * @param id   The unique id of the given milkFarmer
+     */
+    public MilkFarmer(String name, int id) {
+        super(name, id);
         myProducts = new ProductType[]{ProductType.MILK};
         myProduction = new ProductionImpl(this);
         milkChannel = blockChain.milkProductionChannel;
@@ -24,7 +32,6 @@ public class MilkFarmer extends PartyImpl {
         myChannels.add(meatChannel);
         wallet = new Money(100);
     }
-
 }
 
 

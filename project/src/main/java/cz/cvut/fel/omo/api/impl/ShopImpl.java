@@ -18,8 +18,8 @@ public class ShopImpl extends PartyImpl implements Shop {
     BakeryChannel bakeryChannel;
     OrangesChannel orangesChannel;
 
-    public ShopImpl(String name, EcoSystem ecoSystem, int id) {
-        super(name, ecoSystem, id);
+    public ShopImpl(String name, int id) {
+        super(name, id);
         myProducts = new ProductType[]{ProductType.ORANGE, ProductType.MILK, ProductType.BUN_WITH_ORANGE_JAM, ProductType.BREAD};
         myProduction = new ProductionImpl(this);
         milkChannel = blockChain.milkProductionChannel;
