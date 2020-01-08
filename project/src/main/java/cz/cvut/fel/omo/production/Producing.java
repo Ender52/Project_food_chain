@@ -1,7 +1,8 @@
 package cz.cvut.fel.omo.production;
 
+import cz.cvut.fel.omo.api.ProductType;
+import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
 import cz.cvut.fel.omo.production.product.Product;
-import cz.cvut.fel.omo.production.product.ProductType;
 
 public class Producing extends State {
     private int amount;
@@ -22,8 +23,12 @@ public class Producing extends State {
             Product[][] allComps = new Product[components.length][10];
             int k = 0;
             for (ProductType type : components) {
-                allComps[k] = context.getProduction().getMyStorage().takeProducts(type, 10);
-                for (Product p : allComps[k]) context.getProduction().owner.createOperation("Take", p);
+                try {
+                    allComps[k] = context.getProduction().getMyStorage().takeProducts(type, 10);
+                } catch (WrongProductTypeException e) {
+                    e.printStackTrace();
+                }
+                for (Product p : allComps[k]) context.getProduction().getOwner().createOperation("Take", p);
                 k++;
             }
             for (int i = 0; i < 10; ++i) {
@@ -51,8 +56,12 @@ public class Producing extends State {
             Product[][] allComps = new Product[components.length][amount];
             int k = 0;
             for (ProductType type : components) {
-                allComps[k] = context.getProduction().getMyStorage().takeProducts(type, amount);
-                for (Product p : allComps[k]) context.getProduction().owner.createOperation("Take", p);
+                try {
+                    allComps[k] = context.getProduction().getMyStorage().takeProducts(type, amount);
+                } catch (WrongProductTypeException e) {
+                    e.printStackTrace();
+                }
+                for (Product p : allComps[k]) context.getProduction().getOwner().createOperation("Take", p);
 
                 k++;
             }

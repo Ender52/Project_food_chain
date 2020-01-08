@@ -1,7 +1,7 @@
 package cz.cvut.fel.omo.production;
 
+import cz.cvut.fel.omo.api.ProductType;
 import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
-import cz.cvut.fel.omo.production.product.ProductType;
 
 public class Waiting extends State {
     private ProductType[] products;

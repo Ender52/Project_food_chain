@@ -1,6 +1,6 @@
 package cz.cvut.fel.omo.production;
 
-import cz.cvut.fel.omo.parties.PartyImpl;
+import cz.cvut.fel.omo.api.impl.PartyImpl;
 import cz.cvut.fel.omo.production.product.Operation;
 import cz.cvut.fel.omo.production.product.Product;
 

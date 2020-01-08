@@ -1,6 +1,6 @@
 package cz.cvut.fel.omo.production;
 
-import cz.cvut.fel.omo.production.product.ProductType;
+import cz.cvut.fel.omo.api.ProductType;
 
 public class CookBook {
     public static ProductType[] getRecipe(ProductType type) {

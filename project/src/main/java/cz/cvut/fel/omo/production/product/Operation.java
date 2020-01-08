@@ -1,15 +1,15 @@
 package cz.cvut.fel.omo.production.product;
 
 import cz.cvut.fel.omo.Block;
-import cz.cvut.fel.omo.parties.PartyImpl;
+import cz.cvut.fel.omo.api.Party;
 
 public abstract class Operation implements Block {
-    public final PartyImpl party;
+    public final Party party;
     public final Product product;
     public final int day;
     private final String prevBlockHash;
 
-    public Operation(PartyImpl party, Product product, int day, final String prevBlockHash) {
+    public Operation(Party party, Product product, int day, final String prevBlockHash) {
         this.party = party;
         this.product = product;
         this.day = day;

@@ -1,18 +1,19 @@
 package cz.cvut.fel.omo.production;
 
+import cz.cvut.fel.omo.api.ProductType;
+import cz.cvut.fel.omo.api.impl.ProductionImpl;
 import cz.cvut.fel.omo.production.product.Product;
-import cz.cvut.fel.omo.production.product.ProductType;
 
 public class ProductionProcess {
 
     private ProductType myType;
-    private Production production;
+    private ProductionImpl production;
     private ProductType[] components;
     private int amount;
     private State state;
     private Product[] result;
 
-    public ProductionProcess(ProductType type, int amount, Production production) {
+    public ProductionProcess(ProductType type, int amount, ProductionImpl production) {
         myType = type;
         this.amount = amount;
         result = new Product[amount];
@@ -38,7 +39,7 @@ public class ProductionProcess {
         return myType;
     }
 
-    public Production getProduction() {
+    public ProductionImpl getProduction() {
         return production;
     }
 

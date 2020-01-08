@@ -1,5 +1,6 @@
 package cz.cvut.fel.omo.production.product;
 
+import cz.cvut.fel.omo.api.ProductType;
 import cz.cvut.fel.omo.transactions.Money;
 
 public class Product implements Reportable {
