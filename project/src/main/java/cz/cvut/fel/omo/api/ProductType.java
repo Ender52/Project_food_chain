@@ -1,4 +1,4 @@
-package cz.cvut.fel.omo.production.product;
+package cz.cvut.fel.omo.api;
 
 public enum ProductType {
     MILK,

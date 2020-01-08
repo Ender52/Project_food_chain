@@ -1,6 +1,4 @@
-package cz.cvut.fel.omo;
-
-import cz.cvut.fel.omo.production.product.ProductType;
+package cz.cvut.fel.omo.api;
 
 import java.util.List;
 
