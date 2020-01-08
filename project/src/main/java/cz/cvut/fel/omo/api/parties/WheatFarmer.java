@@ -1,4 +1,4 @@
-package cz.cvut.fel.omo.parties;
+package cz.cvut.fel.omo.api.parties;
 
 import cz.cvut.fel.omo.EcoSystem;
 import cz.cvut.fel.omo.api.ProductType;
