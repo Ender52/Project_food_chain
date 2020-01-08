@@ -4,11 +4,11 @@ import cz.cvut.fel.omo.api.Party;
 import cz.cvut.fel.omo.api.ProductType;
 import cz.cvut.fel.omo.api.Storage;
 import cz.cvut.fel.omo.api.impl.ShopImpl;
+import cz.cvut.fel.omo.api.parties.Bakery;
+import cz.cvut.fel.omo.api.parties.MilkFarmer;
+import cz.cvut.fel.omo.api.parties.OrangeFarmer;
+import cz.cvut.fel.omo.api.parties.WheatFarmer;
 import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
-import cz.cvut.fel.omo.parties.Bakery;
-import cz.cvut.fel.omo.parties.MilkFarmer;
-import cz.cvut.fel.omo.parties.OrangeFarmer;
-import cz.cvut.fel.omo.parties.WheatFarmer;
 import cz.cvut.fel.omo.production.product.Product;
 import javafx.util.Pair;
 
@@ -107,15 +107,14 @@ public class EcoSystem {
     }
 
     private void afterActions() {
-        System.out.println("\nSimulation ended. You con see reports or start simulation again.\nTo start again type \"start again\"\nTo see transaction report type \"TR\"\nTo see sequrity report type \"SR\"\nTo see food chain report type \"FR\"");
+        System.out.println("\nSimulation ended. You con see reports or start simulation again.\nTo start again type \"start again\"\nTo see transaction report type \"TR\"\nTo see sequrity report type \"SR\"\nTo see food chain report type \"FR\"\nTo finish type \"end\"");
         String str = in.nextLine();
         if (str.equals("start again")) readStepsAndStart();
         else if (str.equals("TR")) transactionReport();
         else if (str.equals("SR")) sequrityReport();
         else if (str.equals("FR")) foodChainReport();
-
-
-
+        else if (str.equals("end")) return;
+        afterActions();
     }
 
     private Pair<Character, String> parseInput(String str) {
@@ -131,10 +130,6 @@ public class EcoSystem {
 
     public void startSimulation(int steps) {
         for (int i = 0; i < steps; ++i) {
-            if (!blockChain.isSequred()) {
-                System.err.println("BlockChain is not sequred");
-                break;
-            }
             for (Party p : parties) {
                 p.checkRequestsToMe();
                 p.work();
@@ -143,7 +138,7 @@ public class EcoSystem {
                 c.act();
             }
 
-            blockChain.sequre(day);
+            blockChain.secure(day);
             day++;
         }
     }

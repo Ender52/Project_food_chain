@@ -11,6 +11,9 @@ public class Transaction extends Operation {
     public Transaction(Party party, Party receiver, Product product, int day, String prevBlockHash) {
         super(party, product, day, prevBlockHash);
         this.receiver = receiver;
+        int transactionPrice = product.myPrice.amount;
+        getReceiver().changeBalance(-1 * transactionPrice);
+        getParty().changeBalance(transactionPrice);
     }
 
     public Party getParty() {

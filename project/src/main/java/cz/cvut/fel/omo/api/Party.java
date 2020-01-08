@@ -47,4 +47,6 @@ public interface Party {
 
     void createOperation(String type, Product product);
 
+    void doTransaction(Request request);
+
 }

@@ -18,7 +18,6 @@ public class BlockChain {
     private TransactionReporter transactionReporter = new TransactionReporter();
     private List<Pair<Integer, String>> faked = new ArrayList<>();
     private int size = 0;
-    private boolean sequred = true;
     private DoubleSpendingRegulator regulator = new DoubleSpendingRegulator();
 
     public DoubleSpendingRegulator getRegulator() {
@@ -33,9 +32,6 @@ public class BlockChain {
         return transactionReporter;
     }
 
-    public boolean isSequred() {
-        return sequred;
-    }
 
     public List<Operation> getChain() {
         return chain;
@@ -50,7 +46,7 @@ public class BlockChain {
         size++;
     }
 
-    public void sequre(int day) {
+    public void secure(int day) {
         for (int i = 0; i < size - 1; i++) {
             if (!chain.get(i).getMyHash().equals(chain.get(i + 1).getPrevBlockHash())) {
                 System.err.println("Somebody tried to fake block. Block #" + i);

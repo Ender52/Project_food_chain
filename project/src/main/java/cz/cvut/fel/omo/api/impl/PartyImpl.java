@@ -140,22 +140,10 @@ public abstract class PartyImpl implements Party {
         if (randomToDoubleSpend < 10 && request.amount >= 2) {
             violateDoubleSpend(request);
         } else {
-            System.out.println("Party " + name + " is responding on request from Party " + request.sender.getName());
-            Product[] products = new Product[0];
-            try {
-                products = myProduction.getMyStorage().takeProducts(request.productType, request.amount);
-            } catch (WrongProductTypeException e) {
-                e.printStackTrace();
-            }
-            for (Product p : products) createOperation("Take", p);
-            for (Product p : products) {
-                int randomToChangeBlock = (int) (Math.random() * 100);
-                if (randomToChangeBlock < 2) violateChangeDateOfProduction(p);
-                request.channel.doTransaction(createTransaction(request.sender, p));
-            }
-            blockChain.addTransactionForReport(new TransactionForReport(this, request.sender, request.productType, request.amount, ecoSystem.getDay()));
-            request.channel.getAllRequests().remove(request);
+//            System.out.println("Party " + name + " is responding on request from Party " + request.sender.getName());
+            doTransaction(request);
         }
+        request.channel.getAllRequests().remove(request);
 
     }
 
@@ -163,8 +151,8 @@ public abstract class PartyImpl implements Party {
     public void receiveProduct(Product product) {
         {
             try {
-                createOperation("Put", product);
                 myProduction.getMyStorage().put(product);
+                createOperation("Put", product);
                 System.out.println("Party " + name + " received " + product.type);
             } catch (WrongProductTypeException e) {
                 e.printStackTrace();
@@ -212,21 +200,50 @@ public abstract class PartyImpl implements Party {
     }
 
     private void violateDoubleSpend(Request request) {
-        System.out.println("Party " + name + " is responding on request from Party " + request.sender.getName());
         Product[] products = new Product[0];
+        Party reseiver = request.sender;
         try {
             products = myProduction.getMyStorage().takeProducts(request.productType, request.amount);
         } catch (WrongProductTypeException e) {
             e.printStackTrace();
         }
         for (Product p : products) createOperation("Take", p);
+        for (Product p : products) {
+            int randomToChangeBlock = (int) (Math.random() * 100);
+            if (randomToChangeBlock < 2) violateChangeDateOfProduction(p);
+        }
         int i = 0;
-        String prevHash = blockChain.getChain().size() == 0 ? "" : blockChain.getChain().get(blockChain.getChain().size() - 1).getMyHash();
         for (Product p : products) {
             if (i == 1) p = products[0];
-            request.channel.doTransaction(createTransaction(request.sender, p));
+            reseiver.receiveProduct(p);
+            createTransaction(reseiver, p);
             i++;
         }
-        request.channel.getAllRequests().remove(request);
+        blockChain.addTransactionForReport(new TransactionForReport(this, request.sender, request.productType, request.amount, ecoSystem.getDay()));
+
+    }
+
+
+    @Override
+    public void doTransaction(Request request) {
+        Product[] products = new Product[0];
+        Party reseiver = request.sender;
+        try {
+            products = myProduction.getMyStorage().takeProducts(request.productType, request.amount);
+        } catch (WrongProductTypeException e) {
+            e.printStackTrace();
+        }
+        for (Product p : products) createOperation("Take", p);
+        for (Product p : products) {
+            int randomToChangeBlock = (int) (Math.random() * 100);
+            if (randomToChangeBlock < 2) violateChangeDateOfProduction(p);
+        }
+        for (Product p : products) {
+            reseiver.receiveProduct(p);
+            createTransaction(reseiver, p);
+        }
+        blockChain.addTransactionForReport(new TransactionForReport(this, request.sender, request.productType, request.amount, ecoSystem.getDay()));
+
+
     }
 }

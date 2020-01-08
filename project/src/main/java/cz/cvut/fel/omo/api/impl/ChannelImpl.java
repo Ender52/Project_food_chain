@@ -5,7 +5,6 @@ import cz.cvut.fel.omo.api.Channel;
 import cz.cvut.fel.omo.api.Party;
 import cz.cvut.fel.omo.api.ProductType;
 import cz.cvut.fel.omo.transactions.Request;
-import cz.cvut.fel.omo.transactions.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,12 +41,6 @@ public abstract class ChannelImpl implements Channel {
         sendRequest(new Request(type, sender, amount, this));
     }
 
-    public void doTransaction(Transaction transaction) {
-        int transactionPrice = transaction.product.myPrice.amount;
-        transaction.getReceiver().changeBalance(-1 * transactionPrice);
-        transaction.getParty().changeBalance(transactionPrice);
-        transaction.getReceiver().receiveProduct(transaction.product);
-    }
 
     private void sendRequest(Request request) {
         allRequests.add(request);
