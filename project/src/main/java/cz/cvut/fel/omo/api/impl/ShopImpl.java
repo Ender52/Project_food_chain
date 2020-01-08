@@ -23,11 +23,11 @@ public class ShopImpl extends PartyImpl implements Shop {
         myProducts = new ProductType[]{ProductType.ORANGE, ProductType.MILK, ProductType.BUN_WITH_ORANGE_JAM, ProductType.BREAD};
         myProduction = new ProductionImpl(this);
         milkChannel = blockChain.milkProductionChannel;
-        milkChannel.attend(this);
+        milkChannel.addObserver(this);
         bakeryChannel = blockChain.bakeryChannel;
-        bakeryChannel.attend(this);
+        bakeryChannel.addObserver(this);
         orangesChannel = blockChain.orangesChannel;
-        orangesChannel.attend(this);
+        orangesChannel.addObserver(this);
         myChannels.add(milkChannel);
         myChannels.add(bakeryChannel);
         myChannels.add(orangesChannel);

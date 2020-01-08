@@ -17,9 +17,9 @@ public class MilkFarmer extends PartyImpl {
         myProducts = new ProductType[]{ProductType.MILK};
         myProduction = new ProductionImpl(this);
         milkChannel = blockChain.milkProductionChannel;
-        milkChannel.attend(this);
+        milkChannel.addObserver(this);
         meatChannel = blockChain.meatProductionChannel;
-        meatChannel.attend(this);
+        meatChannel.addObserver(this);
         myChannels.add(milkChannel);
         myChannels.add(meatChannel);
         wallet = new Money(100);

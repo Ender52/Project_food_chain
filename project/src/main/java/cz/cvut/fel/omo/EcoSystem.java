@@ -145,7 +145,7 @@ public class EcoSystem {
 
     public void setCustomers(int amount) {
         if (shop == null) {
-            System.err.println("MO SHOP DEFINED");
+            System.err.println("NO SHOP DEFINED");
             return;
         }
         for (int i = 0; i < amount; i++) {

@@ -12,8 +12,8 @@ public class Bakery extends PartyImpl {
         super(name, ecoSystem, id);
         myProducts = new ProductType[]{ProductType.BREAD, ProductType.BUN_WITH_ORANGE_JAM};
         myProduction = new ProductionImpl(this);
-        blockChain.bakeryChannel.attend(this);
-        blockChain.orangesChannel.attend(this);
+        blockChain.bakeryChannel.addObserver(this);
+        blockChain.orangesChannel.addObserver(this);
         myChannels.add(blockChain.bakeryChannel);
         myChannels.add(blockChain.orangesChannel);
         wallet = new Money(100);

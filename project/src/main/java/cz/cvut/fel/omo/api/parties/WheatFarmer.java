@@ -15,7 +15,7 @@ public class WheatFarmer extends PartyImpl {
         myProducts = new ProductType[]{ProductType.WHEAT};
         myProduction = new ProductionImpl(this);
         bakeryChannel = blockChain.bakeryChannel;
-        bakeryChannel.attend(this);
+        bakeryChannel.addObserver(this);
         myChannels.add(bakeryChannel);
         wallet = new Money(100);
     }

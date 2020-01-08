@@ -2,10 +2,7 @@ package cz.cvut.fel.omo.api.impl;
 
 import cz.cvut.fel.omo.BlockChain;
 import cz.cvut.fel.omo.EcoSystem;
-import cz.cvut.fel.omo.api.Channel;
-import cz.cvut.fel.omo.api.Party;
-import cz.cvut.fel.omo.api.ProductType;
-import cz.cvut.fel.omo.api.Production;
+import cz.cvut.fel.omo.api.*;
 import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
 import cz.cvut.fel.omo.production.Creation;
 import cz.cvut.fel.omo.production.PutIntoStorage;
@@ -20,7 +17,7 @@ import cz.cvut.fel.omo.transactions.TransactionForReport;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class PartyImpl implements Party {
+public abstract class PartyImpl implements Party, Observer {
     protected final String name;
     protected Production myProduction;
     protected BlockChain blockChain;
@@ -29,7 +26,7 @@ public abstract class PartyImpl implements Party {
     protected ProductType[] myProducts;
     protected List<Channel> myChannels = new ArrayList<>();
     protected int id;
-
+    protected List<Request> requestsToMe = new ArrayList<>();
 
     public PartyImpl(String name, EcoSystem ecoSystem, int id) {
         System.out.println("Party " + name + " created");
@@ -91,23 +88,20 @@ public abstract class PartyImpl implements Party {
 
     @Override
     public void checkRequestsToMe() {
-        myChannels.forEach(channel -> {
-            for (Request request : channel.getAllRequests()) {
-                if (contains(myProducts, request.productType)) {
-                    try {
-                        if (myProduction.getMyStorage().has(request.productType, request.amount)) {
-                            responseToRequest(request);
-                        } else {
-                            startProduceProducts(request.productType, request.amount);
-                        }
-                    } catch (WrongProductTypeException e) {
-                        e.printStackTrace();
+        for (Request request : requestsToMe) {
+            if (contains(myProducts, request.productType)) {
+                try {
+                    if (myProduction.getMyStorage().has(request.productType, request.amount)) {
+                        responseToRequest(request);
+                    } else {
+                        startProduceProducts(request.productType, request.amount);
                     }
-                    break;
+                } catch (WrongProductTypeException e) {
+                    e.printStackTrace();
                 }
+                break;
             }
-
-        });
+        }
     }
 
     private boolean contains(ProductType[] array, ProductType type) {
@@ -143,7 +137,8 @@ public abstract class PartyImpl implements Party {
 //            System.out.println("Party " + name + " is responding on request from Party " + request.sender.getName());
             doTransaction(request);
         }
-        request.channel.getAllRequests().remove(request);
+        requestsToMe.remove(request);
+        request.channel.deleteRequest(request);
 
     }
 
@@ -245,5 +240,12 @@ public abstract class PartyImpl implements Party {
         blockChain.addTransactionForReport(new TransactionForReport(this, request.sender, request.productType, request.amount, ecoSystem.getDay()));
 
 
+    }
+
+
+    @Override
+    public void update(Request request, boolean added) {
+        if (added) requestsToMe.add(request);
+        else requestsToMe.remove(request);
     }
 }

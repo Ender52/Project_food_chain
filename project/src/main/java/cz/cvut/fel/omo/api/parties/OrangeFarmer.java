@@ -17,9 +17,9 @@ public class OrangeFarmer extends PartyImpl {
         myProducts = new ProductType[]{ProductType.ORANGE};
         myProduction = new ProductionImpl(this);
         orangesChannel = blockChain.orangesChannel;
-        orangesChannel.attend(this);
+        orangesChannel.addObserver(this);
         bakeryChannel = blockChain.bakeryChannel;
-        bakeryChannel.attend(this);
+        bakeryChannel.addObserver(this);
         myChannels.add(orangesChannel);
         myChannels.add(bakeryChannel);
         wallet = new Money(100);
