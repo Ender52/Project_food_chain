@@ -4,13 +4,11 @@ import cz.cvut.fel.omo.Constants;
 import cz.cvut.fel.omo.api.Party;
 import cz.cvut.fel.omo.api.ProductType;
 import cz.cvut.fel.omo.api.Production;
-import cz.cvut.fel.omo.api.Storage;
 import cz.cvut.fel.omo.production.End;
 import cz.cvut.fel.omo.production.ProductionProcess;
 import cz.cvut.fel.omo.production.product.Product;
 
 public class ProductionImpl implements Production {
-    private Storage myStorage;
     private Party owner;
     private int id = 0;
     private ProductType[] myProducts;
@@ -20,7 +18,6 @@ public class ProductionImpl implements Production {
     public ProductionImpl(Party manufacturer) {
         owner = manufacturer;
         myProducts = owner.getMyProducts();
-        myStorage = new StorageImpl(this);
     }
 
 
@@ -32,13 +29,6 @@ public class ProductionImpl implements Production {
         return myProducts;
     }
 
-    public ProductionProcess getCurrentProcess() {
-        return currentProcess;
-    }
-
-    public Storage getMyStorage() {
-        return myStorage;
-    }
 
     public Party getOwner() {
         return owner;

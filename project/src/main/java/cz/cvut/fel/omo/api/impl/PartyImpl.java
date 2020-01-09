@@ -19,7 +19,7 @@ import java.util.List;
 
 public abstract class PartyImpl implements Party, Observer, OperationFactory {
     protected final String name;
-    protected Production myProduction;
+    protected Storage myStorage;
     protected BlockChain blockChain;
     protected Money wallet;
     protected EcoSystem ecoSystem;
@@ -34,9 +34,12 @@ public abstract class PartyImpl implements Party, Observer, OperationFactory {
         this.ecoSystem = EcoSystem.getInstance();
         this.blockChain = ecoSystem.getBlockChain();
         this.id = id;
-        myProducts = new ProductType[0];
     }
 
+    @Override
+    public Storage getMyStorage() {
+        return myStorage;
+    }
 
     @Override
     public List<Channel> getMyChannels() {
@@ -48,10 +51,7 @@ public abstract class PartyImpl implements Party, Observer, OperationFactory {
         return name;
     }
 
-    @Override
-    public Production getMyProduction() {
-        return myProduction;
-    }
+
 
     @Override
     public BlockChain getBlockChain() {
@@ -90,56 +90,14 @@ public abstract class PartyImpl implements Party, Observer, OperationFactory {
         });
     }
 
-    @Override
-    public void checkRequestsToMe() {
-        for (Request request : requestsToMe) {
-            if (contains(myProducts, request.productType)) {
-                try {
-                    if (myProduction.getMyStorage().has(request.productType, request.amount)) {
-                        if (ecoSystem.isReport())
-                            System.out.println("Party " + name + " is responding on request from Party " + request.sender.getName());
-                        responseToRequest(request);
-                    } else {
-                        if (ecoSystem.isReport())
-                            System.out.println("Party " + name + " is reating on " + request.sender.getName() + "`request and started producing " + request.productType + " in amount " + request.amount);
-                        startProduceProducts(request.productType, request.amount);
-                    }
-                } catch (WrongProductTypeException e) {
-                    e.printStackTrace();
-                }
-                break;
-            }
-        }
-    }
 
-    private boolean contains(ProductType[] array, ProductType type) {
+    protected boolean contains(ProductType[] array, ProductType type) {
         for (ProductType productType : array) {
             if (productType == type) return true;
         }
         return false;
     }
 
-
-    @Override
-    public void work() {
-        if (myProduction != null) {
-            Product[] res = myProduction.produce();
-            if (res.length > 0) {
-                for (Product product : res) createOperation("Creation", product);
-                for (Product product : res) createOperation("Put", product);
-                try {
-                    myProduction.getMyStorage().put(res);
-                } catch (WrongProductTypeException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    @Override
-    public void startProduceProducts(ProductType type, int amount) {
-        myProduction.startProducingProducts(type, amount);
-    }
 
     @Override
     public void buyProducts(ProductType type, int amount) {
@@ -165,7 +123,7 @@ public abstract class PartyImpl implements Party, Observer, OperationFactory {
     public void receiveProduct(Product product) {
         {
             try {
-                myProduction.getMyStorage().put(product);
+                myStorage.put(product);
                 createOperation("Put", product);
                 if (ecoSystem.isReport()) System.out.println("Party " + name + " received " + product.type);
             } catch (WrongProductTypeException e) {
@@ -219,7 +177,7 @@ public abstract class PartyImpl implements Party, Observer, OperationFactory {
         Product[] products = new Product[0];
         Party reseiver = request.sender;
         try {
-            products = myProduction.getMyStorage().takeProducts(request.productType, request.amount);
+            products = myStorage.takeProducts(request.productType, request.amount);
         } catch (WrongProductTypeException e) {
             e.printStackTrace();
         }
@@ -245,7 +203,7 @@ public abstract class PartyImpl implements Party, Observer, OperationFactory {
         Product[] products = new Product[0];
         Party reseiver = request.sender;
         try {
-            products = myProduction.getMyStorage().takeProducts(request.productType, request.amount);
+            products = myStorage.takeProducts(request.productType, request.amount);
             if (ecoSystem.isReport())
                 System.out.println("Party " + name + " takes " + request.amount + " " + request.productType + " from storage");
         } catch (WrongProductTypeException e) {

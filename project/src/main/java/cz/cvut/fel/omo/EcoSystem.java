@@ -4,12 +4,8 @@ import cz.cvut.fel.omo.api.Party;
 import cz.cvut.fel.omo.api.PartyFactory;
 import cz.cvut.fel.omo.api.ProductType;
 import cz.cvut.fel.omo.api.Storage;
-import cz.cvut.fel.omo.api.impl.DistributorImpl;
-import cz.cvut.fel.omo.api.impl.ShopImpl;
-import cz.cvut.fel.omo.api.parties.Bakery;
-import cz.cvut.fel.omo.api.parties.MilkFarmer;
-import cz.cvut.fel.omo.api.parties.OrangeFarmer;
-import cz.cvut.fel.omo.api.parties.WheatFarmer;
+import cz.cvut.fel.omo.api.impl.Customer;
+import cz.cvut.fel.omo.api.parties.*;
 import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
 import cz.cvut.fel.omo.production.product.Product;
 import javafx.util.Pair;
@@ -27,8 +23,8 @@ public class EcoSystem implements PartyFactory {
     private List<Party> parties = new ArrayList<>();
     private int partyId = 0;
     private List<Customer> customers = new ArrayList<>();
-    private ShopImpl shop;
-    private DistributorImpl distributor;
+    private Shop shop;
+    private Distributor distributor;
     private boolean report = false;
 
     public boolean isReport() {
@@ -82,9 +78,12 @@ public class EcoSystem implements PartyFactory {
         parties.add(createParty('S', "SHOP"));
 
         parties.add(createParty('D', "DISTRIBOTUR"));
+        parties.add(createParty('C', "CUSTOMER1"));
+        parties.add(createParty('C', "CUSTOMER2"));
 
 
-        setCustomers(10);
+
+
         partiesReport();
         startSimulation(500);
         afterActions();
@@ -107,13 +106,6 @@ public class EcoSystem implements PartyFactory {
             } else {
                 createParty(parsedLine.getKey(), parsedLine.getValue());
             }
-        }
-        System.out.println("Now set number of customers [0,10]");
-        int num = Integer.parseInt(in.nextLine());
-        if (num >= 0 && num <= 10) {
-            setCustomers(num);
-        } else {
-            System.err.println("Wrong input");
         }
         System.out.println("Show parties report? [y / n]");
         String nLine = in.nextLine();
@@ -155,27 +147,14 @@ public class EcoSystem implements PartyFactory {
     public void startSimulation(int steps) {
         for (int i = 0; i < steps; ++i) {
             for (Party p : parties) {
-                p.checkRequestsToMe();
                 p.work();
             }
-            for (Customer c : customers) {
-                c.act();
-            }
-
             blockChain.secure(day);
             day++;
         }
     }
 
-    public void setCustomers(int amount) {
-        if (shop == null) {
-            System.err.println("O SHOP DEFINED");
-            return;
-        }
-        for (int i = 0; i < amount; i++) {
-            customers.add(new Customer(shop));
-        }
-    }
+
 
     public void partiesReport() {
         report = true;
@@ -219,7 +198,7 @@ public class EcoSystem implements PartyFactory {
 
     public void foodChainReport() {
         parties.forEach(party -> {
-            Storage storage = party.getMyProduction().getMyStorage();
+            Storage storage = party.getMyStorage();
             for (ProductType productType : storage.getMyProducts()) {
                 try {
                     if (storage.has(productType, 1)) {
@@ -263,9 +242,9 @@ public class EcoSystem implements PartyFactory {
                 if (shop != null) {
                     System.err.println("Only one shop in simulation");
                 } else {
-                    res = new ShopImpl(name, partyId++);
+                    res = new Shop(name, partyId++);
 
-                    shop = (ShopImpl) res;
+                    shop = (Shop) res;
 
                 }
                 break;
@@ -276,11 +255,15 @@ public class EcoSystem implements PartyFactory {
                 if (distributor != null) {
                     System.err.println("Only one shop in simulation");
                 } else {
-                    res = new DistributorImpl(name, partyId++);
+                    res = new Distributor(name, partyId++);
 
-                    distributor = (DistributorImpl) res;
+                    distributor = (Distributor) res;
 
                 }
+                break;
+            case 'C':
+                res = new Customer(name, partyId++);
+
                 break;
         }
         return res;

@@ -13,11 +13,11 @@ public interface Party {
 
     String getName();
 
-    Production getMyProduction();
-
     BlockChain getBlockChain();
 
     Money getWallet();
+
+    Storage getMyStorage();
 
     EcoSystem getEcoSystem();
 
@@ -45,13 +45,6 @@ public interface Party {
      */
     void work();
 
-    /**
-     * Produce products for the accepted request
-     *
-     * @param type   type of requested products
-     * @param amount amount of requested products
-     */
-    void startProduceProducts(ProductType type, int amount);
 
     /**
      * Buy supplies to start the production of products

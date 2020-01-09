@@ -1,14 +1,15 @@
 package cz.cvut.fel.omo.api.parties;
 
 import cz.cvut.fel.omo.api.ProductType;
-import cz.cvut.fel.omo.api.impl.PartyImpl;
+import cz.cvut.fel.omo.api.impl.Producer;
 import cz.cvut.fel.omo.api.impl.ProductionImpl;
+import cz.cvut.fel.omo.api.impl.StorageImpl;
 import cz.cvut.fel.omo.transactions.Money;
 
 /**
  * <p>Party that produces Breads and Buns with orange jam from given supplies from farmers</p>
  */
-public class Bakery extends PartyImpl {
+public class Bakery extends Producer {
     /**
      * <p>The constructor</p>
      *
@@ -19,6 +20,7 @@ public class Bakery extends PartyImpl {
         super(name, id);
         myProducts = new ProductType[]{ProductType.BREAD, ProductType.BUN_WITH_ORANGE_JAM};
         myProduction = new ProductionImpl(this);
+        myStorage = new StorageImpl(this);
         blockChain.bakeryChannel.addObserver(this);
         blockChain.orangesChannel.addObserver(this);
         myChannels.add(blockChain.bakeryChannel);

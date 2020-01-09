@@ -1,8 +1,9 @@
 package cz.cvut.fel.omo.api.parties;
 
 import cz.cvut.fel.omo.api.ProductType;
-import cz.cvut.fel.omo.api.impl.PartyImpl;
+import cz.cvut.fel.omo.api.impl.Producer;
 import cz.cvut.fel.omo.api.impl.ProductionImpl;
+import cz.cvut.fel.omo.api.impl.StorageImpl;
 import cz.cvut.fel.omo.transactions.MeatProductionChannel;
 import cz.cvut.fel.omo.transactions.MilkProductionChannel;
 import cz.cvut.fel.omo.transactions.Money;
@@ -10,7 +11,7 @@ import cz.cvut.fel.omo.transactions.Money;
 /**
  * <p>Party that produces Milks and Meats</p>
  */
-public class MilkFarmer extends PartyImpl {
+public class MilkFarmer extends Producer {
     MilkProductionChannel milkChannel;
     MeatProductionChannel meatChannel;
 
@@ -24,6 +25,7 @@ public class MilkFarmer extends PartyImpl {
         super(name, id);
         myProducts = new ProductType[]{ProductType.MILK};
         myProduction = new ProductionImpl(this);
+        myStorage = new StorageImpl(this);
         milkChannel = blockChain.milkProductionChannel;
         milkChannel.addObserver(this);
         meatChannel = blockChain.meatProductionChannel;

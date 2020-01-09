@@ -14,6 +14,8 @@ public class BlockChain {
     public final OrangesChannel orangesChannel = new OrangesChannel(this);
     public final MeatProductionChannel meatProductionChannel = new MeatProductionChannel(this);
     public final LogisticChannel logisticChannel = new LogisticChannel(this);
+    public final LogisticChannel shopChannel = new LogisticChannel(this);
+
     private List<Operation> chain = new ArrayList<>();
     private List<Operation> reservChain = new ArrayList<>();
     private TransactionReporter transactionReporter = new TransactionReporter();

@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) throws NoSuchAlgorithmException {
 
         EcoSystem.getInstance().prepLounch();
-//        ecoSystem.launch();
+//        EcoSystem.getInstance().launch();
 
     }
 

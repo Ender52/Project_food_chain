@@ -24,7 +24,7 @@ public class Producing extends State {
             int k = 0;
             for (ProductType type : components) {
                 try {
-                    allComps[k] = context.getProduction().getMyStorage().takeProducts(type, 10);
+                    allComps[k] = context.getProduction().getOwner().getMyStorage().takeProducts(type, 10);
                 } catch (WrongProductTypeException e) {
                     e.printStackTrace();
                 }
@@ -57,7 +57,7 @@ public class Producing extends State {
             int k = 0;
             for (ProductType type : components) {
                 try {
-                    allComps[k] = context.getProduction().getMyStorage().takeProducts(type, amount);
+                    allComps[k] = context.getProduction().getOwner().getMyStorage().takeProducts(type, amount);
                 } catch (WrongProductTypeException e) {
                     e.printStackTrace();
                 }

@@ -41,19 +41,6 @@ public class Product implements Reportable {
             System.out.println("Made from:");
             for (Reportable reportable : components) reportable.report();
         }
-//        for (Operation operation : myOperations) {
-//            System.out.println(operation.toString());
-//        }
-//        if (components.length != 0) {
-//            System.out.println("Was made from products:");
-//        }
-//        int i = 0;
-//        for (Reportable reportable : components) {
-//            reportable.report();
-//            if (i != components.length - 1) System.out.println(",");
-//            i++;
-//
-//        }
     }
 
 

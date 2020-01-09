@@ -1,5 +1,6 @@
 package cz.cvut.fel.omo.api.impl;
 
+import cz.cvut.fel.omo.api.Party;
 import cz.cvut.fel.omo.api.ProductType;
 import cz.cvut.fel.omo.api.Storage;
 import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
@@ -14,11 +15,14 @@ public class StorageImpl implements Storage {
     private WrongProductTypeException exception = new WrongProductTypeException();
     private ArrayList<Product>[] myLists;
     private List<ProductType> myProducts = new ArrayList<>();
-    private ProductionImpl myProduction;
 
-    public StorageImpl(ProductionImpl production) {
-        myProduction = production;
-        initializeStorage();
+    public StorageImpl(Party party) {
+        for (ProductType pt : party.getMyProducts()) {
+            myProducts.add(pt);
+            myProducts.addAll(Arrays.asList(CookBook.getRecipe(pt)));
+        }
+        myLists = new ArrayList[myProducts.size()];
+        for (int i = 0; i < myProducts.size(); i++) myLists[i] = new ArrayList<>();
     }
 
     @Override
@@ -26,14 +30,7 @@ public class StorageImpl implements Storage {
         return myProducts;
     }
 
-    private void initializeStorage() {
-        for (ProductType pt : myProduction.getMyProducts()) {
-            myProducts.add(pt);
-            myProducts.addAll(Arrays.asList(CookBook.getRecipe(pt)));
-        }
-        myLists = new ArrayList[myProducts.size()];
-        for (int i = 0; i < myProducts.size(); i++) myLists[i] = new ArrayList<>();
-    }
+
 
     @Override
     public void put(Product[] products) throws WrongProductTypeException {

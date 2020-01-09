@@ -17,7 +17,7 @@ public class Waiting extends State {
         boolean allProductsPrepared = false;
         for (ProductType type : products) {
             try {
-                allProductsPrepared = context.getProduction().getMyStorage().has(type, context.getAmount());
+                allProductsPrepared = context.getProduction().getOwner().getMyStorage().has(type, context.getAmount());
 
             } catch (WrongProductTypeException e) {
                 System.err.println("WrongProductTypeException");
