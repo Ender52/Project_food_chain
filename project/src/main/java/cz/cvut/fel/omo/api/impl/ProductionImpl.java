@@ -47,7 +47,7 @@ public class ProductionImpl implements Production {
 
     public void startProducingProducts(ProductType type, int amount) {
         if (currentProcess != null) return;
-        System.out.println("Party " + owner.getName() + " started producing " + type + " in amount " + amount);
+
         ProductionProcess newProcess = new ProductionProcess(type, amount, this);
         currentProcess = newProcess;
     }

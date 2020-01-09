@@ -82,7 +82,11 @@ public abstract class PartyImpl implements Party, Observer, OperationFactory {
     @Override
     public void createRequest(ProductType type, int amount) {
         myChannels.forEach(channel -> {
-            if (contains(channel.getMyProducts(), type)) channel.createRequest(type, amount, this);
+            if (contains(channel.getMyProducts(), type)) {
+                if (ecoSystem.isReport())
+                    System.out.println("Party " + name + " created request: " + type + " int amount " + amount);
+                channel.createRequest(type, amount, this);
+            }
         });
     }
 
@@ -92,8 +96,12 @@ public abstract class PartyImpl implements Party, Observer, OperationFactory {
             if (contains(myProducts, request.productType)) {
                 try {
                     if (myProduction.getMyStorage().has(request.productType, request.amount)) {
+                        if (ecoSystem.isReport())
+                            System.out.println("Party " + name + " is responding on request from Party " + request.sender.getName());
                         responseToRequest(request);
                     } else {
+                        if (ecoSystem.isReport())
+                            System.out.println("Party " + name + " is reating on " + request.sender.getName() + "`request and started producing " + request.productType + " in amount " + request.amount);
                         startProduceProducts(request.productType, request.amount);
                     }
                 } catch (WrongProductTypeException e) {
@@ -159,7 +167,7 @@ public abstract class PartyImpl implements Party, Observer, OperationFactory {
             try {
                 myProduction.getMyStorage().put(product);
                 createOperation("Put", product);
-                System.out.println("Party " + name + " received " + product.type);
+                if (ecoSystem.isReport()) System.out.println("Party " + name + " received " + product.type);
             } catch (WrongProductTypeException e) {
                 e.printStackTrace();
             }
@@ -169,7 +177,8 @@ public abstract class PartyImpl implements Party, Observer, OperationFactory {
     @Override
     public void changeBalance(int amount) {
         wallet.add(amount);
-        System.out.println("Party " + name + " balance chenge " + amount + " Current balance: " + wallet.amount);
+        if (ecoSystem.isReport())
+            System.out.println("Party " + name + " balance chenge " + amount + " Current balance: " + wallet.amount);
 
     }
 
@@ -237,6 +246,8 @@ public abstract class PartyImpl implements Party, Observer, OperationFactory {
         Party reseiver = request.sender;
         try {
             products = myProduction.getMyStorage().takeProducts(request.productType, request.amount);
+            if (ecoSystem.isReport())
+                System.out.println("Party " + name + " takes " + request.amount + " " + request.productType + " from storage");
         } catch (WrongProductTypeException e) {
             e.printStackTrace();
         }

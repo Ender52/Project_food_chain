@@ -29,6 +29,10 @@ public class EcoSystem implements PartyFactory {
     private ShopImpl shop;
     private boolean report = false;
 
+    public boolean isReport() {
+        return report;
+    }
+
     public EcoSystem(BlockChain bc) {
         blockChain = bc;
     }
@@ -77,6 +81,7 @@ public class EcoSystem implements PartyFactory {
 
 
         setCustomers(10);
+        partiesReport();
         startSimulation(100);
         afterActions();
     }
@@ -106,6 +111,9 @@ public class EcoSystem implements PartyFactory {
         } else {
             System.err.println("Wrong input");
         }
+        System.out.println("Show parties report? [y / n]");
+        String nLine = in.nextLine();
+        if (nLine.equals("y")) partiesReport();
         readStepsAndStart();
 
     }
@@ -174,26 +182,29 @@ public class EcoSystem implements PartyFactory {
         StringBuilder sb = new StringBuilder();
         List<Pair<Integer, String>> doubleSpends = blockChain.getRegulator().getReportStrings();
         List<Pair<Integer, String>> fakes = blockChain.getFaked();
-        doubleSpends.forEach(pair -> {
-            System.out.println("DAY " + pair.getKey() + "\n" + pair.getValue());
-        });
-        fakes.forEach(pair -> {
-            System.out.println("DAY " + pair.getKey() + "\n" + pair.getValue());
-        });
+//        doubleSpends.forEach(pair -> {
+//            System.out.println("DAY " + pair.getKey() + "\n" + pair.getValue());
+//        });
+//        fakes.forEach(pair -> {
+//            System.out.println("DAY " + pair.getKey() + "\n" + pair.getValue());
+//        });
         var ref = new Object() {
             int cDay = 0;
         };
 
         while (ref.cDay <= this.day) {
             {
-                boolean typed = false;
-                sb.append("DAY " + day + " :\n");
+                sb.setLength(0);
+//                sb = new StringBuilder();
+                sb.append("DAY " + ref.cDay + " :\n");
                 doubleSpends.stream().filter(pair -> pair.getKey() == ref.cDay).forEach(pair -> {
                     sb.append(pair.getValue() + "\n");
                 });
                 fakes.stream().filter(pair -> pair.getKey() == ref.cDay).forEach(pair -> {
                     sb.append(pair.getValue() + "\n");
                 });
+                if (!sb.toString().equals("DAY " + ref.cDay + " :\n")) System.out.println(sb.toString());
+                ref.cDay++;
             }
         }
 

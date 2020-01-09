@@ -1,6 +1,5 @@
 package cz.cvut.fel.omo.api.impl;
 
-import cz.cvut.fel.omo.EcoSystem;
 import cz.cvut.fel.omo.api.ProductType;
 import cz.cvut.fel.omo.api.Shop;
 import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
@@ -40,7 +39,7 @@ public class ShopImpl extends PartyImpl implements Shop {
         else if (type == ProductType.BREAD) bakeryChannel.createRequest(type, amount, this);
         else if (type == ProductType.BUN_WITH_ORANGE_JAM) bakeryChannel.createRequest(type, amount, this);
         else if (type == ProductType.ORANGE) orangesChannel.createRequest(type, amount, this);
-        System.out.println("Party " + name + " created request " + type + " " + amount);
+        if (ecoSystem.isReport()) System.out.println("Party " + name + " created request " + type + " " + amount);
 
 
     }
@@ -77,7 +76,7 @@ public class ShopImpl extends PartyImpl implements Shop {
             }
             for (Product product : productsToSell) createOperation("Take", product);
             wallet.add(productsToSell[0].myPrice.amount * productsToSell.length);
-            System.out.println("CUSTOMER BUY " + size + " " + p + "s");
+            if (ecoSystem.isReport()) System.out.println("CUSTOMER BUY " + size + " " + p + "s");
         } else {
             Product[] productsToSell = new Product[0];
             try {
