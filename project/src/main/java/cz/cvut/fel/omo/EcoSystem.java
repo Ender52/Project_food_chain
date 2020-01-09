@@ -4,6 +4,7 @@ import cz.cvut.fel.omo.api.Party;
 import cz.cvut.fel.omo.api.PartyFactory;
 import cz.cvut.fel.omo.api.ProductType;
 import cz.cvut.fel.omo.api.Storage;
+import cz.cvut.fel.omo.api.impl.DistributorImpl;
 import cz.cvut.fel.omo.api.impl.ShopImpl;
 import cz.cvut.fel.omo.api.parties.Bakery;
 import cz.cvut.fel.omo.api.parties.MilkFarmer;
@@ -27,6 +28,7 @@ public class EcoSystem implements PartyFactory {
     private int partyId = 0;
     private List<Customer> customers = new ArrayList<>();
     private ShopImpl shop;
+    private DistributorImpl distributor;
     private boolean report = false;
 
     public boolean isReport() {
@@ -79,10 +81,12 @@ public class EcoSystem implements PartyFactory {
 
         parties.add(createParty('S', "SHOP"));
 
+        parties.add(createParty('D', "DISTRIBOTUR"));
+
 
         setCustomers(10);
         partiesReport();
-        startSimulation(100);
+        startSimulation(500);
         afterActions();
     }
 
@@ -123,7 +127,6 @@ public class EcoSystem implements PartyFactory {
         int steps = in.nextInt();
         System.out.println("Simulation start");
         startSimulation(steps);
-        afterActions();
 
     }
 
@@ -268,6 +271,16 @@ public class EcoSystem implements PartyFactory {
                 break;
             case 'W':
                 res = new WheatFarmer(name, partyId++);
+                break;
+            case 'D':
+                if (distributor != null) {
+                    System.err.println("Only one shop in simulation");
+                } else {
+                    res = new DistributorImpl(name, partyId++);
+
+                    distributor = (DistributorImpl) res;
+
+                }
                 break;
         }
         return res;

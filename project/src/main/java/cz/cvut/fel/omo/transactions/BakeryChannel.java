@@ -8,6 +8,6 @@ public class BakeryChannel extends ChannelImpl {
 
     public BakeryChannel(BlockChain bc) {
         super(bc);
-        myProducts = new ProductType[]{ProductType.BUN_WITH_ORANGE_JAM, ProductType.BUN_WITH_ORANGE_JAM, ProductType.WHEAT};
+        myProducts = new ProductType[]{ProductType.BREAD, ProductType.BUN_WITH_ORANGE_JAM, ProductType.WHEAT};
     }
 }

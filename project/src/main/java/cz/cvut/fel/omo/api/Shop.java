@@ -7,3 +7,4 @@ public interface Shop {
 
     List<ProductType> showAsortiment();
 }
+
