@@ -1,6 +1,7 @@
 package cz.cvut.fel.omo.production.product;
 
 import cz.cvut.fel.omo.Block;
+import cz.cvut.fel.omo.api.OperationVisitor;
 import cz.cvut.fel.omo.api.Party;
 
 public abstract class Operation implements Block {
@@ -16,8 +17,7 @@ public abstract class Operation implements Block {
         this.prevBlockHash = prevBlockHash;
     }
 
-    @Override
-    public abstract String toString();
+
 
     @Override
     public String getMyHash() {
@@ -33,5 +33,6 @@ public abstract class Operation implements Block {
         return prevBlockHash;
     }
 
+    public abstract void accept(OperationVisitor visitor);
 
 }

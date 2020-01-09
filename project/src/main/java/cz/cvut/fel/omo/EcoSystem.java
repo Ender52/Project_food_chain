@@ -202,7 +202,8 @@ public class EcoSystem implements PartyFactory {
             for (ProductType productType : storage.getMyProducts()) {
                 try {
                     if (storage.has(productType, 1)) {
-                        showProductReport(storage.get(productType));
+                        System.out.println(showProductReport(storage.get(productType)));
+                        ;
                         System.out.println();
                     }
                 } catch (WrongProductTypeException e) {
@@ -212,10 +213,9 @@ public class EcoSystem implements PartyFactory {
         });
     }
 
-    public void showProductReport(Product product) {
+    public String showProductReport(Product product) {
         int id = product.getId();
-        System.out.println("FOOD CHAIN REPORT.\nProduct #" + id + "\n");
-        product.report();
+        return "FOOD CHAIN REPORT.\nProduct #" + id + "\n" + product.report();
 //        int id = product.getId();
 //        System.out.println("FOOD CHAIN REPORT.\nProduct #" + id + "\n");
 //        blockChain.getChain().stream().filter(operation -> operation.product.getId() == id).forEach(System.out::println);
