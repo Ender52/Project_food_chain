@@ -1,7 +1,10 @@
 package cz.cvut.fel.omo.production.product;
 
+import cz.cvut.fel.omo.EcoSystem;
 import cz.cvut.fel.omo.api.ProductType;
 import cz.cvut.fel.omo.transactions.Money;
+
+import java.util.List;
 
 public class Product implements Reportable {
     public final ProductType type;
@@ -32,7 +35,12 @@ public class Product implements Reportable {
 
     @Override
     public void report() {
-
+        List<Operation> chain = EcoSystem.getInstance().getBlockChain().getChain();
+        chain.stream().filter(operation -> operation.product.getId() == id).forEach(System.out::println);
+        if (components.length != 0) {
+            System.out.println("Made from:");
+            for (Reportable reportable : components) reportable.report();
+        }
 //        for (Operation operation : myOperations) {
 //            System.out.println(operation.toString());
 //        }

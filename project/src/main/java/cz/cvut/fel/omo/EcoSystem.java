@@ -233,7 +233,13 @@ public class EcoSystem implements PartyFactory {
     public void showProductReport(Product product) {
         int id = product.getId();
         System.out.println("FOOD CHAIN REPORT.\nProduct #" + id + "\n");
-        blockChain.getChain().stream().filter(operation -> operation.product.getId() == id).forEach(System.out::println);
+        product.report();
+//        int id = product.getId();
+//        System.out.println("FOOD CHAIN REPORT.\nProduct #" + id + "\n");
+//        blockChain.getChain().stream().filter(operation -> operation.product.getId() == id).forEach(System.out::println);
+//        if(product.getComponents().length!= 0){
+//            System.out.println("Made from:\n");
+//        }
     }
 
     @Override
