@@ -101,7 +101,7 @@ public abstract class PartyImpl implements Party, Observer, OperationFactory {
             if (contains(channel.getMyProducts(), type)) {
                 if (ecoSystem.isReport())
                     System.out.println("Party " + name + " created request: " + type + " int amount " + amount);
-                channel.createRequest(new Request(type, this, amount, channel));
+                channel.sendRequest(new Request(type, this, amount, channel));
             }
         });
     }

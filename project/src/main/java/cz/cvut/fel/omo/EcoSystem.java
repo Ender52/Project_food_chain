@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * EcoSystem is the main class in application, it
+ */
 public class EcoSystem implements PartyFactory {
     private static EcoSystem INSTANCE;
     private static String info = "Initial EcoSystem class";
@@ -27,20 +30,31 @@ public class EcoSystem implements PartyFactory {
     private Distributor distributor;
     private boolean report = false;
 
-    public boolean isReport() {
-        return report;
-    }
-
-    public EcoSystem(BlockChain bc) {
-        blockChain = bc;
-    }
-
+    /**
+     * @return instance of EcoSystem
+     * which is a Singleton
+     */
     public synchronized static EcoSystem getInstance(){
         if (INSTANCE == null) {
             INSTANCE = new EcoSystem(new BlockChain());
         }
         return INSTANCE;
     }
+
+    public EcoSystem(BlockChain bc) {
+        blockChain = bc;
+    }
+
+    /**
+     * Return a report "flag"
+     * true to switch on logging , otherwise false
+     *
+     * @return
+     */
+    public boolean isReport() {
+        return report;
+    }
+
 
     public int getDay() {
         return day;
@@ -50,6 +64,10 @@ public class EcoSystem implements PartyFactory {
         return parties;
     }
 
+    /**
+     * set Parties(members) of system
+     * @param parties
+     */
     public void setParties(List<Party> parties) {
         this.parties = parties;
     }
@@ -58,6 +76,9 @@ public class EcoSystem implements PartyFactory {
         return blockChain;
     }
 
+    /**
+     * Lounch method, where you define all params of system in code
+     */
     public void prepLounch() {
 
         parties.add(createParty('M', "MILK FARMER"));
@@ -81,14 +102,15 @@ public class EcoSystem implements PartyFactory {
         parties.add(createParty('C', "CUSTOMER1"));
         parties.add(createParty('C', "CUSTOMER2"));
 
-
-
-
         partiesReport();
         startSimulation(500);
         afterActions();
     }
 
+    /**
+     * Launch method for average user
+     * where you should type params from console
+     */
     public void launch() {
         System.out.println("Welkom to FoodChain Simulation. At first define a shop. Type name of the shop");
         String shopName = in.nextLine();
@@ -155,7 +177,6 @@ public class EcoSystem implements PartyFactory {
     }
 
 
-
     public void partiesReport() {
         report = true;
     }
@@ -196,7 +217,7 @@ public class EcoSystem implements PartyFactory {
         System.out.println(blockChain.getTransactionReporter().getReportString());
     }
 
-    public void foodChainReport() {
+    private void foodChainReport() {
         parties.forEach(party -> {
             Storage storage = party.getMyStorage();
             for (ProductType productType : storage.getMyProducts()) {
@@ -213,7 +234,7 @@ public class EcoSystem implements PartyFactory {
         });
     }
 
-    public String showProductReport(Product product) {
+    private String showProductReport(Product product) {
         int id = product.getId();
         return "FOOD CHAIN REPORT.\nProduct #" + id + "\n" + product.report();
 //        int id = product.getId();

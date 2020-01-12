@@ -3,6 +3,9 @@ package cz.cvut.fel.omo.api;
 import cz.cvut.fel.omo.BlockChain;
 import cz.cvut.fel.omo.transactions.Request;
 
+/**
+ * Channel where Parties send requests to each other
+ */
 public interface Channel {
 
     /**
@@ -15,7 +18,13 @@ public interface Channel {
      */
     ProductType[] getMyProducts();
 
-    void createRequest(Request request);
+
+    /**
+     * Sends request to all participants of channel
+     *
+     * @param request
+     */
+    void sendRequest(Request request);
 
     /**
      * Removal of the request from the request queue

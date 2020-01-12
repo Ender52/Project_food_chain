@@ -2,6 +2,9 @@ package cz.cvut.fel.omo;
 
 import cz.cvut.fel.omo.api.ProductType;
 
+/**
+ * Constans of our system
+ */
 public class Constants {
     static final int MILK = 1000000;
     static final int WHEAT = 2000000;
@@ -11,6 +14,7 @@ public class Constants {
     static final int BUN_WITH_ORANGE_JAM = 6000000;
     static final int SAUSAGE = 7000000;
     public static final String TYPES = "MOWB";
+
     public static int getProductTypeNumber(ProductType type) {
         if (type == ProductType.WHEAT) {
             return WHEAT;

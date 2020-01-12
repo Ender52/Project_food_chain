@@ -16,7 +16,7 @@ public class ChannelTest {
         Channel channel = test_baker.getBlockChain().bakeryChannel;
         Request test_request = new Request(ProductType.BREAD, test_distr, 2, channel);
         assertTrue(test_baker.getRequestsToMe().size() == 0);
-        channel.createRequest(test_request);
+        channel.sendRequest(test_request);
         assertTrue(test_baker.getRequestsToMe().size() == 1);
     }
 
@@ -26,9 +26,9 @@ public class ChannelTest {
         Party test_distr = new Distributor("test2", 2);
         Channel channel = test_baker.getBlockChain().bakeryChannel;
         Request test_request = new Request(ProductType.BREAD, test_distr, 2, channel);
-        channel.createRequest(test_request);
+        channel.sendRequest(test_request);
         assertTrue(test_baker.getRequestsToMe().size() == 1);
-        channel.createRequest(test_request);
+        channel.sendRequest(test_request);
         assertTrue(test_baker.getRequestsToMe().size() == 2);
     }
 
@@ -40,7 +40,7 @@ public class ChannelTest {
         Request test_request = new Request(ProductType.BREAD, test_distr, 2, channel);
         assertTrue(test_distr.getRequestsToMe().size() == 0);
         assertTrue(test_baker.getRequestsToMe().size() == 0);
-        channel.createRequest(test_request);
+        channel.sendRequest(test_request);
         assertTrue(test_distr.getRequestsToMe().size() == 0);
         assertTrue(test_baker.getRequestsToMe().size() == 1);
     }
@@ -52,7 +52,7 @@ public class ChannelTest {
         Channel channel = test_baker.getBlockChain().bakeryChannel;
         Request test_request = new Request(ProductType.MILK, test_distr, 2, channel);
         assertTrue(test_baker.getRequestsToMe().size() == 0);
-        channel.createRequest(test_request);
+        channel.sendRequest(test_request);
         assertTrue(test_baker.getRequestsToMe().size() == 0);
     }
     @Test
@@ -62,7 +62,7 @@ public class ChannelTest {
         Channel channel = test_baker.getBlockChain().bakeryChannel;
         Request test_request = new Request(ProductType.BREAD, test_distr, 2, channel);
         assertTrue(test_baker.getRequestsToMe().size() == 0);
-        channel.createRequest(test_request);
+        channel.sendRequest(test_request);
         assertTrue(test_baker.getRequestsToMe().size() == 1);
         channel.deleteRequest(test_request);
         assertTrue(test_baker.getRequestsToMe().size() == 0);

@@ -5,6 +5,9 @@ import javafx.util.Pair;
 
 import java.util.*;
 
+/**
+ * Regulator of DoubleSpending
+ */
 public class DoubleSpendingRegulator {
     private Map<Integer, Set<Integer>> myMap = new HashMap<>();
     private List<Pair<Integer, String>> reportStrings = new ArrayList<>();
@@ -13,7 +16,12 @@ public class DoubleSpendingRegulator {
         return reportStrings;
     }
 
-    public void validateTransaction(Transaction transaction) {
+    /**
+     * Checks if transaction
+     *
+     * @param transaction is valid
+     */
+    void validateTransaction(Transaction transaction) {
         int id = transaction.getParty().getId();
 
         int newId = transaction.product.getId();

@@ -9,6 +9,9 @@ import cz.cvut.fel.omo.transactions.Transaction;
 
 import java.util.List;
 
+/**
+ * Party is main member of FoodChain ecoSystem
+ */
 public interface Party {
 
     List<Request> getRequestsToMe();
@@ -80,11 +83,31 @@ public interface Party {
      */
     Transaction createTransaction(Party receiver, Product product);
 
+    /**
+     * Creates Operation,
+     * method delegates to CreateOperation()  of OperationFactory
+     *
+     * @param type    of Operation
+     * @param product of Operation
+     */
     void createOp(String type, Product product);
 
+    /**
+     * Creates transaction, sell products
+     * @param request from which transaction is build
+     */
     void doTransaction(Request request);
 
+    /**
+     * Violate system rules by changing data in block of BlockChain
+     * changes day of creation
+     * @param product which creation date changes
+     */
     void violateChangeDateOfProduction(Product product);
 
+    /**
+     *Violate system rules by selling one product twice
+     * @param request
+     */
     void violateDoubleSpend(Request request);
 }

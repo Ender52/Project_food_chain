@@ -33,7 +33,7 @@ public abstract class ChannelImpl implements Channel, Subject {
     }
 
 
-    public void createRequest(Request request) {
+    public void sendRequest(Request request) {
         if (!contains(myProducts, request.productType)) return;
         lastChange = new Pair<>(request, true);
         notifyAllObservers();
