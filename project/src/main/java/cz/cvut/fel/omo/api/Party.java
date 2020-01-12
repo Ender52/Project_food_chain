@@ -11,6 +11,8 @@ import java.util.List;
 
 public interface Party {
 
+    List<Request> getRequestsToMe();
+
     String getName();
 
     BlockChain getBlockChain();
@@ -27,13 +29,6 @@ public interface Party {
 
     int getId();
 
-    /**
-     * Creation of request
-     *
-     * @param type   type of requested products
-     * @param amount amount of requested products
-     */
-    void createRequest(ProductType type, int amount);
 
     /**
      * Check if any requests are available in channels that the given party attends
@@ -89,4 +84,7 @@ public interface Party {
 
     void doTransaction(Request request);
 
+    void violateChangeDateOfProduction(Product product);
+
+    void violateDoubleSpend(Request request);
 }

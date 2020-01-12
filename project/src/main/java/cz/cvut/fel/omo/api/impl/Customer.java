@@ -23,7 +23,7 @@ public class Customer extends PartyImpl {
     @Override
     public void work() {
         int random = (int) (Math.random() * myProducts.length);
-        createRequest(myProducts[random], random + 1);
+        buyProducts(myProducts[random], random + 1);
         wallet.add(20);
     }
 }

@@ -37,6 +37,11 @@ public abstract class PartyImpl implements Party, Observer, OperationFactory {
     }
 
     @Override
+    public List<Request> getRequestsToMe() {
+        return requestsToMe;
+    }
+
+    @Override
     public Storage getMyStorage() {
         return myStorage;
     }
@@ -79,16 +84,6 @@ public abstract class PartyImpl implements Party, Observer, OperationFactory {
     }
 
 
-    @Override
-    public void createRequest(ProductType type, int amount) {
-        myChannels.forEach(channel -> {
-            if (contains(channel.getMyProducts(), type)) {
-                if (ecoSystem.isReport())
-                    System.out.println("Party " + name + " created request: " + type + " int amount " + amount);
-                channel.createRequest(type, amount, this);
-            }
-        });
-    }
 
 
     protected boolean contains(ProductType[] array, ProductType type) {
@@ -101,7 +96,13 @@ public abstract class PartyImpl implements Party, Observer, OperationFactory {
 
     @Override
     public void buyProducts(ProductType type, int amount) {
-        createRequest(type, amount);
+        myChannels.forEach(channel -> {
+            if (contains(channel.getMyProducts(), type)) {
+                if (ecoSystem.isReport())
+                    System.out.println("Party " + name + " created request: " + type + " int amount " + amount);
+                channel.createRequest(new Request(type, this, amount, channel));
+            }
+        });
     }
 
     @Override
@@ -166,14 +167,16 @@ public abstract class PartyImpl implements Party, Observer, OperationFactory {
         return operation;
     }
 
-    private void violateChangeDateOfProduction(Product product) {
+    @Override
+    public void violateChangeDateOfProduction(Product product) {
         Operation creation = blockChain.getChain().stream().filter(operation -> operation.product.getId() == product.getId()).findFirst().get();
         Operation fake = new Creation(creation.party, creation.product, creation.day + 2, creation.getPrevBlockHash());
         int index = blockChain.getChain().indexOf(creation);
         blockChain.getChain().set(index, fake);
     }
 
-    private void violateDoubleSpend(Request request) {
+    @Override
+    public void violateDoubleSpend(Request request) {
         Product[] products = new Product[0];
         Party reseiver = request.sender;
         try {
@@ -226,7 +229,10 @@ public abstract class PartyImpl implements Party, Observer, OperationFactory {
 
     @Override
     public void update(Request request, boolean added) {
-        if (added) requestsToMe.add(request);
+        if (added) {
+            if (request.sender != this)
+                requestsToMe.add(request);
+        }
         else requestsToMe.remove(request);
     }
 

@@ -1,7 +1,10 @@
 package cz.cvut.fel.omo.api.impl;
 
 import cz.cvut.fel.omo.BlockChain;
-import cz.cvut.fel.omo.api.*;
+import cz.cvut.fel.omo.api.Channel;
+import cz.cvut.fel.omo.api.Observer;
+import cz.cvut.fel.omo.api.ProductType;
+import cz.cvut.fel.omo.api.Subject;
 import cz.cvut.fel.omo.transactions.Request;
 import javafx.util.Pair;
 
@@ -29,11 +32,19 @@ public abstract class ChannelImpl implements Channel, Subject {
         return myProducts;
     }
 
-    public void createRequest(ProductType type, int amount, Party sender) {
-        lastChange = new Pair<>(new Request(type, sender, amount, this), true);
+
+    public void createRequest(Request request) {
+        if (!contains(myProducts, request.productType)) return;
+        lastChange = new Pair<>(request, true);
         notifyAllObservers();
     }
 
+    protected boolean contains(ProductType[] array, ProductType type) {
+        for (ProductType productType : array) {
+            if (productType == type) return true;
+        }
+        return false;
+    }
     @Override
     public void deleteRequest(Request request) {
         lastChange = new Pair<>(request, false);

@@ -15,14 +15,7 @@ public interface Channel {
      */
     ProductType[] getMyProducts();
 
-    /**
-     * Creation of request in the given channel
-     *
-     * @param type   type of requested products
-     * @param amount amount of requested products
-     * @param sender sender of the request
-     */
-    void createRequest(ProductType type, int amount, Party sender);
+    void createRequest(Request request);
 
     /**
      * Removal of the request from the request queue
