@@ -1,6 +1,7 @@
 package cz.cvut.fel.omo.api;
 
 import cz.cvut.fel.omo.api.parties.Bakery;
+import cz.cvut.fel.omo.api.parties.Distributor;
 import cz.cvut.fel.omo.transactions.Request;
 import org.junit.Test;
 
@@ -11,7 +12,7 @@ public class ChannelTest {
     @Test
     public void createRequestCreatesFirstRequest() {
         Party test_baker = new Bakery("test", 1);
-        Party test_distr = new Bakery("test2", 2);
+        Party test_distr = new Distributor("test2", 2);
         Channel channel = test_baker.getBlockChain().bakeryChannel;
         Request test_request = new Request(ProductType.BREAD, test_distr, 2, channel);
         assertTrue(test_baker.getRequestsToMe().size() == 0);
@@ -22,7 +23,7 @@ public class ChannelTest {
     @Test
     public void createRequestCreatesSecondRequest() {
         Party test_baker = new Bakery("test", 1);
-        Party test_distr = new Bakery("test2", 2);
+        Party test_distr = new Distributor("test2", 2);
         Channel channel = test_baker.getBlockChain().bakeryChannel;
         Request test_request = new Request(ProductType.BREAD, test_distr, 2, channel);
         channel.createRequest(test_request);
@@ -34,7 +35,7 @@ public class ChannelTest {
     @Test
     public void createRequestSenderDoesntReceiveHisRequest() {
         Party test_baker = new Bakery("test", 1);
-        Party test_distr = new Bakery("test2", 2);
+        Party test_distr = new Distributor("test2", 2);
         Channel channel = test_baker.getBlockChain().bakeryChannel;
         Request test_request = new Request(ProductType.BREAD, test_distr, 2, channel);
         assertTrue(test_distr.getRequestsToMe().size() == 0);
@@ -47,7 +48,7 @@ public class ChannelTest {
     @Test
     public void createRequestWrongProductType() {
         Party test_baker = new Bakery("test", 1);
-        Party test_distr = new Bakery("test2", 2);
+        Party test_distr = new Distributor("test2", 2);
         Channel channel = test_baker.getBlockChain().bakeryChannel;
         Request test_request = new Request(ProductType.MILK, test_distr, 2, channel);
         assertTrue(test_baker.getRequestsToMe().size() == 0);
@@ -70,7 +71,7 @@ public class ChannelTest {
     @Test
     public void deleteRequestNotExistingRequest() {
         Party test_baker = new Bakery("test", 1);
-        Party test_distr = new Bakery("test2", 2);
+        Party test_distr = new Distributor("test2", 2);
         Channel channel = test_baker.getBlockChain().bakeryChannel;
         Request test_request = new Request(ProductType.BREAD, test_distr, 2, channel);
         assertTrue(test_baker.getRequestsToMe().size() == 0);
