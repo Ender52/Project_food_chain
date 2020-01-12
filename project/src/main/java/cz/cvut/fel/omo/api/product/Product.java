@@ -1,8 +1,9 @@
-package cz.cvut.fel.omo.production.product;
+package cz.cvut.fel.omo.api.product;
 
-import cz.cvut.fel.omo.EcoSystem;
+import cz.cvut.fel.omo.api.EcoSystem;
 import cz.cvut.fel.omo.api.ProductType;
 import cz.cvut.fel.omo.api.impl.ReportVisitor;
+import cz.cvut.fel.omo.api.operations.Operation;
 import cz.cvut.fel.omo.transactions.Money;
 
 import java.util.List;

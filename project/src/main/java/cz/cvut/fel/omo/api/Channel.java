@@ -1,6 +1,6 @@
 package cz.cvut.fel.omo.api;
 
-import cz.cvut.fel.omo.BlockChain;
+import cz.cvut.fel.omo.api.impl.BlockChainImpl;
 import cz.cvut.fel.omo.transactions.Request;
 
 /**
@@ -11,7 +11,7 @@ public interface Channel {
     /**
      * @return blockchain
      */
-    BlockChain getBlockChain();
+    BlockChainImpl getBlockChain();
 
     /**
      * @return productTypes that are possible to exchange in the given channel

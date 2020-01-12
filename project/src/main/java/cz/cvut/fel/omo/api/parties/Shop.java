@@ -1,9 +1,9 @@
 package cz.cvut.fel.omo.api.parties;
 
 import cz.cvut.fel.omo.api.ProductType;
+import cz.cvut.fel.omo.api.channels.LogisticChannel;
 import cz.cvut.fel.omo.api.impl.Consumer;
 import cz.cvut.fel.omo.api.impl.StorageImpl;
-import cz.cvut.fel.omo.transactions.LogisticChannel;
 import cz.cvut.fel.omo.transactions.Money;
 
 public class Shop extends Consumer {

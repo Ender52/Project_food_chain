@@ -1,14 +1,19 @@
-package cz.cvut.fel.omo;
+package cz.cvut.fel.omo.api.impl;
 
-import cz.cvut.fel.omo.production.product.Operation;
-import cz.cvut.fel.omo.transactions.*;
+import cz.cvut.fel.omo.api.BlockChain;
+import cz.cvut.fel.omo.api.channels.*;
+import cz.cvut.fel.omo.api.operations.Operation;
+import cz.cvut.fel.omo.api.operations.Transaction;
+import cz.cvut.fel.omo.transactions.DoubleSpendingRegulator;
+import cz.cvut.fel.omo.transactions.TransactionForReport;
+import cz.cvut.fel.omo.transactions.TransactionReporter;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class BlockChain {
+public class BlockChainImpl implements BlockChain {
     public final MilkProductionChannel milkProductionChannel = new MilkProductionChannel(this);
     public final BakeryChannel bakeryChannel = new BakeryChannel(this);
     public final OrangesChannel orangesChannel = new OrangesChannel(this);
@@ -23,23 +28,29 @@ public class BlockChain {
     private int size = 0;
     private DoubleSpendingRegulator regulator = new DoubleSpendingRegulator();
 
+
+    @Override
     public DoubleSpendingRegulator getRegulator() {
         return regulator;
     }
 
+    @Override
     public List<Pair<Integer, String>> getFaked() {
         return faked;
     }
+
+    @Override
 
     public TransactionReporter getTransactionReporter() {
         return transactionReporter;
     }
 
-
+    @Override
     public List<Operation> getChain() {
         return chain;
     }
 
+    @Override
     public void addBlock(Operation block) {
         chain.add(block);
         reservChain.add(block);
@@ -49,6 +60,7 @@ public class BlockChain {
         size++;
     }
 
+    @Override
     public void secure(int day) {
         for (int i = 0; i < size - 1; i++) {
             if (!chain.get(i).getMyHash().equals(chain.get(i + 1).getPrevBlockHash())) {
@@ -60,6 +72,7 @@ public class BlockChain {
         }
     }
 
+    @Override
     public void addTransactionForReport(TransactionForReport transaction) {
         transactionReporter.addTransaction(transaction);
     }

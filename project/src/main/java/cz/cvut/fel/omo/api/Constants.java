@@ -1,6 +1,4 @@
-package cz.cvut.fel.omo;
-
-import cz.cvut.fel.omo.api.ProductType;
+package cz.cvut.fel.omo.api;
 
 /**
  * Constans of our system

@@ -1,8 +1,9 @@
-package cz.cvut.fel.omo.production.product;
+package cz.cvut.fel.omo.api.operations;
 
-import cz.cvut.fel.omo.Block;
+import cz.cvut.fel.omo.api.Block;
 import cz.cvut.fel.omo.api.OperationVisitor;
 import cz.cvut.fel.omo.api.Party;
+import cz.cvut.fel.omo.api.product.Product;
 
 public abstract class Operation implements Block {
     public final Party party;

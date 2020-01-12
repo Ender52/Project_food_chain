@@ -1,13 +1,10 @@
-package cz.cvut.fel.omo;
+package cz.cvut.fel.omo.api;
 
-import cz.cvut.fel.omo.api.Party;
-import cz.cvut.fel.omo.api.PartyFactory;
-import cz.cvut.fel.omo.api.ProductType;
-import cz.cvut.fel.omo.api.Storage;
+import cz.cvut.fel.omo.api.impl.BlockChainImpl;
 import cz.cvut.fel.omo.api.impl.Customer;
 import cz.cvut.fel.omo.api.parties.*;
+import cz.cvut.fel.omo.api.product.Product;
 import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
-import cz.cvut.fel.omo.production.product.Product;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
@@ -20,7 +17,7 @@ import java.util.Scanner;
 public class EcoSystem implements PartyFactory {
     private static EcoSystem INSTANCE;
     private static String info = "Initial EcoSystem class";
-    private BlockChain blockChain;
+    private BlockChainImpl blockChain;
     private int day = 0;
     Scanner in = new Scanner(System.in);
     private List<Party> parties = new ArrayList<>();
@@ -30,19 +27,19 @@ public class EcoSystem implements PartyFactory {
     private Distributor distributor;
     private boolean report = false;
 
+    public EcoSystem(BlockChainImpl bc) {
+        blockChain = bc;
+    }
+
     /**
      * @return instance of EcoSystem
      * which is a Singleton
      */
     public synchronized static EcoSystem getInstance(){
         if (INSTANCE == null) {
-            INSTANCE = new EcoSystem(new BlockChain());
+            INSTANCE = new EcoSystem(new BlockChainImpl());
         }
         return INSTANCE;
-    }
-
-    public EcoSystem(BlockChain bc) {
-        blockChain = bc;
     }
 
     /**
@@ -72,7 +69,7 @@ public class EcoSystem implements PartyFactory {
         this.parties = parties;
     }
 
-    public BlockChain getBlockChain() {
+    public BlockChainImpl getBlockChain() {
         return blockChain;
     }
 

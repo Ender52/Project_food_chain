@@ -2,8 +2,8 @@ package cz.cvut.fel.omo.api;
 
 import cz.cvut.fel.omo.api.parties.Bakery;
 import cz.cvut.fel.omo.api.parties.Distributor;
+import cz.cvut.fel.omo.api.product.Product;
 import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
-import cz.cvut.fel.omo.production.product.Product;
 import cz.cvut.fel.omo.transactions.Request;
 import org.junit.Test;
 

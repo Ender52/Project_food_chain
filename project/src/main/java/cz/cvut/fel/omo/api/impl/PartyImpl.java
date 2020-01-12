@@ -1,18 +1,12 @@
 package cz.cvut.fel.omo.api.impl;
 
-import cz.cvut.fel.omo.BlockChain;
-import cz.cvut.fel.omo.EcoSystem;
 import cz.cvut.fel.omo.api.*;
+import cz.cvut.fel.omo.api.operations.*;
+import cz.cvut.fel.omo.api.product.Product;
 import cz.cvut.fel.omo.exceptions.OmoException;
 import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
-import cz.cvut.fel.omo.production.Creation;
-import cz.cvut.fel.omo.production.PutIntoStorage;
-import cz.cvut.fel.omo.production.TakenFromStorage;
-import cz.cvut.fel.omo.production.product.Operation;
-import cz.cvut.fel.omo.production.product.Product;
 import cz.cvut.fel.omo.transactions.Money;
 import cz.cvut.fel.omo.transactions.Request;
-import cz.cvut.fel.omo.transactions.Transaction;
 import cz.cvut.fel.omo.transactions.TransactionForReport;
 
 import java.util.ArrayList;
@@ -21,7 +15,7 @@ import java.util.List;
 public abstract class PartyImpl implements Party, Observer, OperationFactory {
     protected final String name;
     protected Storage myStorage;
-    protected BlockChain blockChain;
+    protected BlockChainImpl blockChain;
     protected Money wallet;
     protected EcoSystem ecoSystem;
     protected ProductType[] myProducts;
@@ -60,7 +54,7 @@ public abstract class PartyImpl implements Party, Observer, OperationFactory {
 
 
     @Override
-    public BlockChain getBlockChain() {
+    public BlockChainImpl getBlockChain() {
         return blockChain;
     }
 

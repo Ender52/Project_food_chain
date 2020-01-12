@@ -2,7 +2,7 @@ package cz.cvut.fel.omo.production;
 
 import cz.cvut.fel.omo.api.ProductType;
 import cz.cvut.fel.omo.api.impl.ProductionImpl;
-import cz.cvut.fel.omo.production.product.Product;
+import cz.cvut.fel.omo.api.product.Product;
 
 public class ProductionProcess {
 

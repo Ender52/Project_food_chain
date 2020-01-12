@@ -1,9 +1,13 @@
 package cz.cvut.fel.omo.api.parties;
 
 import cz.cvut.fel.omo.api.ProductType;
+import cz.cvut.fel.omo.api.channels.BakeryChannel;
+import cz.cvut.fel.omo.api.channels.LogisticChannel;
+import cz.cvut.fel.omo.api.channels.MilkProductionChannel;
+import cz.cvut.fel.omo.api.channels.OrangesChannel;
 import cz.cvut.fel.omo.api.impl.Consumer;
 import cz.cvut.fel.omo.api.impl.StorageImpl;
-import cz.cvut.fel.omo.transactions.*;
+import cz.cvut.fel.omo.transactions.Money;
 
 public class Distributor extends Consumer {
     MilkProductionChannel milkChannel;

@@ -1,6 +1,6 @@
 package cz.cvut.fel.omo.api.impl;
 
-import cz.cvut.fel.omo.transactions.LogisticChannel;
+import cz.cvut.fel.omo.api.channels.LogisticChannel;
 import cz.cvut.fel.omo.transactions.Money;
 
 public class Customer extends PartyImpl {

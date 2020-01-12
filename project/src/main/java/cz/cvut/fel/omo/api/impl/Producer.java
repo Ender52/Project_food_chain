@@ -2,8 +2,8 @@ package cz.cvut.fel.omo.api.impl;
 
 import cz.cvut.fel.omo.api.ProductType;
 import cz.cvut.fel.omo.api.Production;
+import cz.cvut.fel.omo.api.product.Product;
 import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
-import cz.cvut.fel.omo.production.product.Product;
 import cz.cvut.fel.omo.transactions.Request;
 
 public abstract class Producer extends PartyImpl {

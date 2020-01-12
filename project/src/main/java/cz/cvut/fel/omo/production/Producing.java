@@ -1,8 +1,8 @@
 package cz.cvut.fel.omo.production;
 
 import cz.cvut.fel.omo.api.ProductType;
+import cz.cvut.fel.omo.api.product.Product;
 import cz.cvut.fel.omo.exceptions.OmoException;
-import cz.cvut.fel.omo.production.product.Product;
 
 public class Producing extends State {
     private int amount;

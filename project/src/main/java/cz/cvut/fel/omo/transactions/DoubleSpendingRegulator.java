@@ -1,6 +1,6 @@
-package cz.cvut.fel.omo;
+package cz.cvut.fel.omo.transactions;
 
-import cz.cvut.fel.omo.transactions.Transaction;
+import cz.cvut.fel.omo.api.operations.Transaction;
 import javafx.util.Pair;
 
 import java.util.*;
@@ -21,7 +21,7 @@ public class DoubleSpendingRegulator {
      *
      * @param transaction is valid
      */
-    void validateTransaction(Transaction transaction) {
+    public void validateTransaction(Transaction transaction) {
         int id = transaction.getParty().getId();
 
         int newId = transaction.product.getId();

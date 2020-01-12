@@ -1,10 +1,10 @@
 package cz.cvut.fel.omo.api.parties;
 
 import cz.cvut.fel.omo.api.ProductType;
+import cz.cvut.fel.omo.api.channels.BakeryChannel;
 import cz.cvut.fel.omo.api.impl.Producer;
 import cz.cvut.fel.omo.api.impl.ProductionImpl;
 import cz.cvut.fel.omo.api.impl.StorageImpl;
-import cz.cvut.fel.omo.transactions.BakeryChannel;
 import cz.cvut.fel.omo.transactions.Money;
 
 /**

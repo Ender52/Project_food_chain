@@ -3,11 +3,11 @@ package cz.cvut.fel.omo.api.impl;
 import cz.cvut.fel.omo.api.Party;
 import cz.cvut.fel.omo.api.ProductType;
 import cz.cvut.fel.omo.api.Storage;
+import cz.cvut.fel.omo.api.product.Product;
 import cz.cvut.fel.omo.exceptions.NotEnoughProductsException;
 import cz.cvut.fel.omo.exceptions.OmoException;
 import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
 import cz.cvut.fel.omo.production.CookBook;
-import cz.cvut.fel.omo.production.product.Product;
 
 import java.util.ArrayList;
 import java.util.Arrays;

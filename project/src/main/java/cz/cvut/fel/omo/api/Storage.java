@@ -1,8 +1,8 @@
 package cz.cvut.fel.omo.api;
 
+import cz.cvut.fel.omo.api.product.Product;
 import cz.cvut.fel.omo.exceptions.OmoException;
 import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
-import cz.cvut.fel.omo.production.product.Product;
 
 import java.util.List;
 

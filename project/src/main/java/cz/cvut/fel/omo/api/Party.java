@@ -1,11 +1,10 @@
 package cz.cvut.fel.omo.api;
 
-import cz.cvut.fel.omo.BlockChain;
-import cz.cvut.fel.omo.EcoSystem;
-import cz.cvut.fel.omo.production.product.Product;
+import cz.cvut.fel.omo.api.impl.BlockChainImpl;
+import cz.cvut.fel.omo.api.operations.Transaction;
+import cz.cvut.fel.omo.api.product.Product;
 import cz.cvut.fel.omo.transactions.Money;
 import cz.cvut.fel.omo.transactions.Request;
-import cz.cvut.fel.omo.transactions.Transaction;
 
 import java.util.List;
 
@@ -18,7 +17,7 @@ public interface Party {
 
     String getName();
 
-    BlockChain getBlockChain();
+    BlockChainImpl getBlockChain();
 
     Money getWallet();
 

@@ -1,12 +1,12 @@
 package cz.cvut.fel.omo.api.impl;
 
-import cz.cvut.fel.omo.Constants;
+import cz.cvut.fel.omo.api.Constants;
 import cz.cvut.fel.omo.api.Party;
 import cz.cvut.fel.omo.api.ProductType;
 import cz.cvut.fel.omo.api.Production;
+import cz.cvut.fel.omo.api.product.Product;
 import cz.cvut.fel.omo.production.End;
 import cz.cvut.fel.omo.production.ProductionProcess;
-import cz.cvut.fel.omo.production.product.Product;
 
 public class ProductionImpl implements Production {
     private Party owner;

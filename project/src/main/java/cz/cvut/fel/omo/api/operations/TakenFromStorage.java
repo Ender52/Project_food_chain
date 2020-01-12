@@ -1,9 +1,8 @@
-package cz.cvut.fel.omo.production;
+package cz.cvut.fel.omo.api.operations;
 
 import cz.cvut.fel.omo.api.OperationVisitor;
 import cz.cvut.fel.omo.api.impl.PartyImpl;
-import cz.cvut.fel.omo.production.product.Operation;
-import cz.cvut.fel.omo.production.product.Product;
+import cz.cvut.fel.omo.api.product.Product;
 
 public class TakenFromStorage extends Operation {
 

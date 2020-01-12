@@ -1,9 +1,9 @@
 package cz.cvut.fel.omo.api;
 
-import cz.cvut.fel.omo.production.Creation;
-import cz.cvut.fel.omo.production.PutIntoStorage;
-import cz.cvut.fel.omo.production.TakenFromStorage;
-import cz.cvut.fel.omo.transactions.Transaction;
+import cz.cvut.fel.omo.api.operations.Creation;
+import cz.cvut.fel.omo.api.operations.PutIntoStorage;
+import cz.cvut.fel.omo.api.operations.TakenFromStorage;
+import cz.cvut.fel.omo.api.operations.Transaction;
 
 /**
  * Visitor for classes extended Operation class

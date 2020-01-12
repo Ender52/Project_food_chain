@@ -1,9 +1,8 @@
-package cz.cvut.fel.omo.transactions;
+package cz.cvut.fel.omo.api.operations;
 
 import cz.cvut.fel.omo.api.OperationVisitor;
 import cz.cvut.fel.omo.api.Party;
-import cz.cvut.fel.omo.production.product.Operation;
-import cz.cvut.fel.omo.production.product.Product;
+import cz.cvut.fel.omo.api.product.Product;
 
 public class Transaction extends Operation {
     private Party receiver;

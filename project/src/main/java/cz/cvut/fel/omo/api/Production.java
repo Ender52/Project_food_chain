@@ -1,6 +1,6 @@
 package cz.cvut.fel.omo.api;
 
-import cz.cvut.fel.omo.production.product.Product;
+import cz.cvut.fel.omo.api.product.Product;
 
 /**
  * Production like fabric, class that is responsible for creation of products

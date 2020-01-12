@@ -1,6 +1,5 @@
 package cz.cvut.fel.omo.api.impl;
 
-import cz.cvut.fel.omo.BlockChain;
 import cz.cvut.fel.omo.api.Channel;
 import cz.cvut.fel.omo.api.Observer;
 import cz.cvut.fel.omo.api.ProductType;
@@ -12,17 +11,17 @@ import java.util.ArrayList;
 
 public abstract class ChannelImpl implements Channel, Subject {
     protected Pair<Request, Boolean> lastChange;
-    protected BlockChain blockChain;
+    protected BlockChainImpl blockChain;
     protected ArrayList<Observer> participants = new ArrayList<>();
     protected ProductType[] myProducts;
 
 
-    public ChannelImpl(BlockChain bc) {
+    public ChannelImpl(BlockChainImpl bc) {
         blockChain = bc;
     }
 
 
-    public BlockChain getBlockChain() {
+    public BlockChainImpl getBlockChain() {
         return blockChain;
     }
 

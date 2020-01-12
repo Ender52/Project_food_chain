@@ -1,7 +1,7 @@
 package cz.cvut.fel.omo.api;
 
-import cz.cvut.fel.omo.production.product.Operation;
-import cz.cvut.fel.omo.production.product.Product;
+import cz.cvut.fel.omo.api.operations.Operation;
+import cz.cvut.fel.omo.api.product.Product;
 
 /**
  * Factory for Operations
