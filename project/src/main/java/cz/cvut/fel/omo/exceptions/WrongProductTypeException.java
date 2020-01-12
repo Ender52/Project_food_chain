@@ -1,5 +1,5 @@
 package cz.cvut.fel.omo.exceptions;
 
-public class WrongProductTypeException extends Exception {
+public class WrongProductTypeException extends OmoException {
 
 }

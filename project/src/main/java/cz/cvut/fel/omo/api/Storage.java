@@ -1,5 +1,6 @@
 package cz.cvut.fel.omo.api;
 
+import cz.cvut.fel.omo.exceptions.OmoException;
 import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
 import cz.cvut.fel.omo.production.product.Product;
 
@@ -39,7 +40,7 @@ public interface Storage {
      * @return
      * @throws WrongProductTypeException
      */
-    Product[] takeProducts(ProductType type, int amount) throws WrongProductTypeException;
+    Product[] takeProducts(ProductType type, int amount) throws OmoException;
 
     int size(ProductType type) throws WrongProductTypeException;
 

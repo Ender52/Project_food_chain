@@ -1,7 +1,7 @@
 package cz.cvut.fel.omo.production;
 
 import cz.cvut.fel.omo.api.ProductType;
-import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
+import cz.cvut.fel.omo.exceptions.OmoException;
 import cz.cvut.fel.omo.production.product.Product;
 
 public class Producing extends State {
@@ -25,7 +25,7 @@ public class Producing extends State {
             for (ProductType type : components) {
                 try {
                     allComps[k] = context.getProduction().getOwner().getMyStorage().takeProducts(type, 10);
-                } catch (WrongProductTypeException e) {
+                } catch (OmoException e) {
                     e.printStackTrace();
                 }
                 for (Product p : allComps[k]) context.getProduction().getOwner().createOp("Take", p);
@@ -58,7 +58,7 @@ public class Producing extends State {
             for (ProductType type : components) {
                 try {
                     allComps[k] = context.getProduction().getOwner().getMyStorage().takeProducts(type, amount);
-                } catch (WrongProductTypeException e) {
+                } catch (OmoException e) {
                     e.printStackTrace();
                 }
                 for (Product p : allComps[k]) context.getProduction().getOwner().createOp("Take", p);

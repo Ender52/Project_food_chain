@@ -3,6 +3,7 @@ package cz.cvut.fel.omo.api.impl;
 import cz.cvut.fel.omo.BlockChain;
 import cz.cvut.fel.omo.EcoSystem;
 import cz.cvut.fel.omo.api.*;
+import cz.cvut.fel.omo.exceptions.OmoException;
 import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
 import cz.cvut.fel.omo.production.Creation;
 import cz.cvut.fel.omo.production.PutIntoStorage;
@@ -181,7 +182,7 @@ public abstract class PartyImpl implements Party, Observer, OperationFactory {
         Party reseiver = request.sender;
         try {
             products = myStorage.takeProducts(request.productType, request.amount);
-        } catch (WrongProductTypeException e) {
+        } catch (OmoException e) {
             e.printStackTrace();
         }
         for (Product p : products) createOperation("Take", p);
@@ -209,7 +210,7 @@ public abstract class PartyImpl implements Party, Observer, OperationFactory {
             products = myStorage.takeProducts(request.productType, request.amount);
             if (ecoSystem.isReport())
                 System.out.println("Party " + name + " takes " + request.amount + " " + request.productType + " from storage");
-        } catch (WrongProductTypeException e) {
+        } catch (OmoException e) {
             e.printStackTrace();
         }
         for (Product p : products) createOperation("Take", p);

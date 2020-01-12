@@ -3,6 +3,8 @@ package cz.cvut.fel.omo.api.impl;
 import cz.cvut.fel.omo.api.Party;
 import cz.cvut.fel.omo.api.ProductType;
 import cz.cvut.fel.omo.api.Storage;
+import cz.cvut.fel.omo.exceptions.NotEnoughProductsException;
+import cz.cvut.fel.omo.exceptions.OmoException;
 import cz.cvut.fel.omo.exceptions.WrongProductTypeException;
 import cz.cvut.fel.omo.production.CookBook;
 import cz.cvut.fel.omo.production.product.Product;
@@ -13,6 +15,7 @@ import java.util.List;
 
 public class StorageImpl implements Storage {
     private WrongProductTypeException exception = new WrongProductTypeException();
+    private NotEnoughProductsException notEnoughProductsException = new NotEnoughProductsException();
     private ArrayList<Product>[] myLists;
     private List<ProductType> myProducts = new ArrayList<>();
 
@@ -56,10 +59,11 @@ public class StorageImpl implements Storage {
     }
 
     @Override
-    public Product[] takeProducts(ProductType type, int amount) throws WrongProductTypeException {
+    public Product[] takeProducts(ProductType type, int amount) throws OmoException {
         Product[] res = new Product[amount];
         if (!myProducts.contains(type)) throw exception;
         int index = myProducts.indexOf(type);
+        if (myLists[index].size() < amount) throw notEnoughProductsException;
         for (int i = 0; i < amount; i++) res[i] = myLists[index].remove(0);
         return res;
     }
